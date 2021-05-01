@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Image from 'next/image'
+import Link from 'next/link'
 import styles from '../styles/Home.module.css'
 
 export default function Home() {
@@ -17,9 +18,9 @@ export default function Home() {
             <Image src="/godefroy.svg" width='185px' height='55px' />
           </div>
           <div className={styles.links}>
-            <p className={styles.link_item}>Overzicht</p>
-            <p className={styles.link_item}>Klanten</p>
-            <p className={styles.link_item}>Mail</p>
+            <p className={styles.link_item}><Link href="/">Overzicht</Link></p>
+            <p className={styles.link_item}><Link href="/klanten">Klanten</Link></p>
+            <p className={styles.link_item}><Link href="/mail">Mail</Link></p>
           </div>
         </div>
         <div className={styles.dashboard}>
@@ -34,10 +35,60 @@ export default function Home() {
           </div>
           <div className={styles.dashboard_data}>
             <p className={styles.dashboard_user}>Alec M.</p>
+
             <div className={styles.dashboard_user_data}>
               <p className={styles.dashboard_user_data_title}>Klanten</p>
               <p className={styles.dashboard_user_data_input}>312</p>
             </div>
+
+            <div className={styles.dashboard_user_data}>
+              <p className={styles.dashboard_user_data_title}>Totaal</p>
+              <div className={styles.dashboard_user_data_status}>
+                <div className={styles.dashboard_user_data_status_bar}>
+                  <div></div>
+                </div>
+                <div className={styles.dashboard_user_data_status_data}>
+                  <p>50%</p>
+                </div>
+              </div>
+            </div>
+
+            <div className={styles.dashboard_user_data}>
+              <p className={styles.dashboard_user_data_title}>Zomerbanden</p>
+              <div className={styles.dashboard_user_data_status}>
+                <div className={styles.dashboard_user_data_status_bar}>
+                  <div style={{ backgroundColor: '#E9C46A' }}></div>
+                </div>
+                <div className={styles.dashboard_user_data_status_data}>
+                  <p>50%</p>
+                </div>
+              </div>
+            </div>
+
+            <div className={styles.dashboard_user_data}>
+              <p className={styles.dashboard_user_data_title}>Winterbanden</p>
+              <div className={styles.dashboard_user_data_status}>
+                <div className={styles.dashboard_user_data_status_bar}>
+                  <div style={{ width: '50%', backgroundColor: '#E9C46A' }}></div>
+                </div>
+                <div className={styles.dashboard_user_data_status_data}>
+                  <p>50%</p>
+                </div>
+              </div>
+            </div>
+
+            <div className={styles.dashboard_user_data}>
+              <p className={styles.dashboard_user_data_title}>Capaciteit</p>
+              <div className={styles.dashboard_user_data_status}>
+                <div className={styles.dashboard_user_data_status_bar}>
+                  <div style={{ width: '75%', backgroundColor: '#264653' }}></div>
+                </div>
+                <div className={styles.dashboard_user_data_status_data}>
+                  <p>75%</p>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </main>
