@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
 import styles from '../styles/Home.module.css'
+import costumers from '../styles/Klanten.module.css'
 
 function Klanten() {
   return (
@@ -24,7 +25,13 @@ function Klanten() {
           </div>
         </div>
         <div className={styles.dashboard}>
-
+          <div className={costumers.header}>
+            <h1>Klantenlijst</h1>
+            <div className={costumers.header_search}>
+              <p>Search</p>
+              {/* Here comes input field */}
+            </div>
+          </div>
         </div>
       </main>
 
