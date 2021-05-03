@@ -24,7 +24,7 @@ function Mail() {
             <p className={styles.link_item}><Link href="/mail">Mail</Link></p>
           </div>
         </div>
-        <div className={styles.dashboard}>
+        <div className={costumers.dashboard}>
           <div className={costumers.header}>
             <h1>Mail</h1>
             <div className={costumers.header_search}>

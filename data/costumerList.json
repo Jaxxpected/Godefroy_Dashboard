@@ -2,13 +2,28 @@
     "users": [
         {
             "userId": 1,
-            "firstname": "Alec",
-            "lastname": "Meganck"
+            "name": "Alec Meganck",
+            "zomerbanden": 0,
+            "winterbanden": 4,
+            "lang": "Nederlands"
         },
         {
-            "userId": 1,
-            "firstname": "Alec",
-            "lastname": "Meganck"
+            "userId": 2,
+            "name": "Britt Godefroy",
+            "zomerbanden": 4,
+            "winterbanden": 0,
+            "lang": "Frans"
+        },
+        {
+            "userId": 3,
+            "name": "Lars Godefroy",
+            "zomerbanden": 0,
+            "winterbanden": 4,
+            "lang": "Engels"
         }
-    ]
+    ],
+    "tires": {
+        "capaciteit": 1240,
+        "total": 12
+    }
 }
