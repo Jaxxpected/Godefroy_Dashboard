@@ -50,21 +50,64 @@ function Toevoegen() {
                 <input className={add.box_small_input} type="text" name="email" placeholder="x@gmail.com" />
               </div>
               <div className={add.box_full}>
-                <p>Groeven</p>
+                <div className={add.box_full_menu}>
+                  <p>Zomer</p>
+                  <p>Winter</p>
+                </div>
+                <div className={add.box_full_content}>
+                  <div className={add.box_full_content_checkbox}>
+                    <label className={add.box_small_label}>Groeven</label>
+                    <div className={add.box_full_content_options}>
+                      <div className={add.box_full_content_checklist}>
+                        <label className={add.box_small_checklist_label}>LV</label>
+                        <input className={add.box_small_checklist_tire} type="text" id="lv" name="lv" placeholder="lv"></input>
+                        <input className={add.checkbox} type="checkbox" id="lv" name="lv" value="lv"></input>
+
+                        <label className={add.box_small_checklist_label}>RV</label>
+                        <input className={add.box_small_checklist_tire} type="text" id="rv" name="rv" placeholder="rv"></input>
+                        <input className={add.checkbox} type="checkbox" id="rv" name="rv" value="rv"></input>
+
+                        <label className={add.box_small_checklist_label}>LA</label>
+                        <input className={add.box_small_checklist_tire} type="text" id="la" name="la" placeholder="la"></input>
+                        <input className={add.checkbox} type="checkbox" id="la" name="la" value="la"></input>
+
+                        <label className={add.box_small_checklist_label}>RA</label>
+                        <input className={add.box_small_checklist_tire} type="text" id="ra" name="ra" placeholder="ra"></input>
+                        <input className={add.checkbox} type="checkbox" id="ra" name="ra" value="ra"></input>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div className={add.box_mediumplus}>
                 <label className={add.box_small_label}>Opmerkingen:</label>
                 <textarea placeholder="Voeg hier uw opmerking" />
               </div>
               <div className={add.box_small}>
-                <p>Banden</p>
+                <label className={add.box_small_label}>Banden</label>
+                <div className={add.box_small_checklist}>
+                  <label className={add.box_small_checklist_label}>Winter</label>
+                  <input className={add.checkbox} type="checkbox" id="winter" name="winter" value="winter"></input>
+                  <label className={add.box_small_checklist_label}>Summer</label>
+                  <input className={add.checkbox} type="checkbox" id="summer" name="summer" value="summer"></input>
+                </div>
               </div>
               <div className={add.box_small}>
-                <p>Kit</p>
+                <p>Kit of band</p>
+                <div className={add.box_small_checklist}>
+                  <label className={add.box_small_checklist_label}>Kit</label>
+                  <input className={add.checkbox} type="checkbox" id="kit" name="kit" value="kit"></input>
+                  <label className={add.box_small_checklist_label}>Band</label>
+                  <input className={add.checkbox} type="checkbox" id="band" name="band" value="band"></input>
+                </div>
               </div>
-              <div className={add.box_small}>
+              <a href="#" className={add.box_small}>
                 <p>Foto's</p>
-              </div>
+                <div className={add.box_small_pics}>
+                  <p>Band</p>
+                  <p>Velg</p>
+                </div>
+              </a>
               <div className={add.box_small}>
                 <p>Automatische mail</p>
               </div>
