@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
+import InputMask from "react-input-mask";
 import data from '../data/costumerList.json'
 import styles from '../styles/Home.module.css'
 import costumers from '../styles/Klanten.module.css'
@@ -39,7 +40,7 @@ function Toevoegen() {
               </div>
               <div className={add.box_small}>
                 <label className={add.box_small_label}>Ligging</label>
-                <input className={add.box_small_input} type="text" name="place" placeholder="XX" />
+                <InputMask className={add.box_small_input} mask="a9-a9" type="text" name="place" placeholder="XX-XX" />
               </div>
               <div className={add.box_medium}>
                 <label className={add.box_small_label}>Taal</label>
@@ -51,7 +52,7 @@ function Toevoegen() {
               </div>
               <div className={add.box_full}>
                 <div className={add.box_full_menu}>
-                  <p>Zomer</p>
+                  <p className={add.box_full_menu_active}>Zomer</p>
                   <p>Winter</p>
                 </div>
                 <div className={add.box_full_content}>
@@ -60,28 +61,31 @@ function Toevoegen() {
                     <div className={add.box_full_content_options}>
                       <div className={add.box_full_content_checklist}>
                         <label className={add.box_small_checklist_label}>LV</label>
-                        <input className={add.box_small_checklist_tire} type="text" id="lv" name="lv" placeholder="lv"></input>
+                        <InputMask className={add.box_small_checklist_tire} mask="9,9" type="text" id="lv" name="lv" placeholder="x,x" />
                         <input className={add.checkbox} type="checkbox" id="lv" name="lv" value="lv"></input>
 
                         <label className={add.box_small_checklist_label}>RV</label>
-                        <input className={add.box_small_checklist_tire} type="text" id="rv" name="rv" placeholder="rv"></input>
+                        <InputMask className={add.box_small_checklist_tire} mask="9,9" type="text" id="rv" name="rv" placeholder="x,x" />
                         <input className={add.checkbox} type="checkbox" id="rv" name="rv" value="rv"></input>
 
                         <label className={add.box_small_checklist_label}>LA</label>
-                        <input className={add.box_small_checklist_tire} type="text" id="la" name="la" placeholder="la"></input>
+                        <InputMask className={add.box_small_checklist_tire} mask="9,9" type="text" id="la" name="la" placeholder="x,x" />
                         <input className={add.checkbox} type="checkbox" id="la" name="la" value="la"></input>
 
                         <label className={add.box_small_checklist_label}>RA</label>
-                        <input className={add.box_small_checklist_tire} type="text" id="ra" name="ra" placeholder="ra"></input>
+                        <InputMask className={add.box_small_checklist_tire} mask="9,9" type="text" id="ra" name="ra" placeholder="x,x" />
                         <input className={add.checkbox} type="checkbox" id="ra" name="ra" value="ra"></input>
                       </div>
                     </div>
+                  </div>
+                  <div className={add.box_full_content_image}>
+                    <Image src="/car.svg" width='300px' height='370px' />
                   </div>
                 </div>
               </div>
               <div className={add.box_mediumplus}>
                 <label className={add.box_small_label}>Opmerkingen:</label>
-                <textarea placeholder="Voeg hier uw opmerking" />
+                <textarea placeholder="Typ hier uw opmerking" />
               </div>
               <div className={add.box_small}>
                 <label className={add.box_small_label}>Banden</label>
@@ -108,8 +112,16 @@ function Toevoegen() {
                   <p>Velg</p>
                 </div>
               </a>
-              <div className={add.box_small}>
+              <div className={add.automatic_mail}>
                 <p>Automatische mail</p>
+                <div className={add.automatic}>
+                  <div className={add.automatic_title}>
+                    <p>Groeven</p>
+                  </div>
+                  <a href="#" className={add.automatic_button}>
+                    <p>Verstuur</p>
+                  </a>
+                </div>
               </div>
             </div>
           </form>
