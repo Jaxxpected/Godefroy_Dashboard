@@ -24,8 +24,8 @@
         {
             "userId": 4,
             "name": "John D'hoe",
-            "zomerbanden": 4,
-            "winterbanden": 0,
+            "zomerbanden": 0,
+            "winterbanden": 3,
             "lang": "Engels"
         }
     ],
