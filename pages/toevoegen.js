@@ -7,7 +7,10 @@ import styles from '../styles/Home.module.css'
 import costumers from '../styles/Klanten.module.css'
 import add from '../styles/Add.module.css'
 
+import { firestore } from "../utils/firebase"
+
 function Toevoegen() {
+
   return (
     <div className={styles.container}>
       <Head>

@@ -1,11 +1,24 @@
+import { useEffect, useState } from 'react'
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
-import data from '../data/costumerList.json'
 import styles from '../styles/Home.module.css'
 import costumers from '../styles/Klanten.module.css'
 
+import { firestore } from "../utils/firebase"
+
 function Klanten() {
+
+  const [users, setUsers] = useState([])
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await firestore.collection("costumer").get();
+      setUsers(data.docs.map(doc => doc.data()))
+    }
+    fetchData()
+  }, [])
+
   return (
     <div className={styles.container}>
       <Head>
@@ -45,13 +58,13 @@ function Klanten() {
               <p className={costumers.filter_atelier}>Plaats</p>
               <p className={costumers.filter_email}>E-mail</p>
             </div>
-            {data.users.map(user => (
+            {users.map(user => (
               <div key="" className={costumers.client}>
-                <p className={costumers.client_name}>{user.name}</p>
-                <p className={costumers.client_plate}>1VEF257</p>
-                <p className={costumers.lang}>{user.lang}</p>
-                <p className={costumers.atelier}>F1</p>
-                <p className={costumers.email}>johndoe@gmail.com</p>
+                <p className={costumers.client_name}>{user.Name}</p>
+                <p className={costumers.client_plate}>{user.Plate}</p>
+                <p className={costumers.lang}>{user.Lang}</p>
+                <p className={costumers.atelier}>{user.Atelier}</p>
+                <p className={costumers.email}>{user.Email}</p>
               </div>
             ))}
           </div>

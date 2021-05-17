@@ -1,17 +1,10 @@
-import { useEffect } from 'react'
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
 import styles from '../styles/Home.module.css'
 import list from '../data/costumerList.json'
 
-import { getUsers } from "../utils/users"
-
 export default function Home() {
-
-  useEffect(() => {
-    getUsers();
-  }, []);
 
   // Start count
   const collect = require('collect.js');
