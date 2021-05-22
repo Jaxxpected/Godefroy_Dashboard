@@ -7,17 +7,14 @@ import styles from '../styles/Home.module.css'
 import costumers from '../styles/Klanten.module.css'
 import add from '../styles/Add.module.css'
 
+import { firestore } from "../utils/firebase"
+
 function Toevoegen() {
 
   const [showSummer, setSummer] = useState("false");
-  const [showWinter, setWinter] = useState("false");
 
   const handleToggle = () => {
     setSummer(!showSummer);
-  };
-
-  const handleWinterToggle = () => {
-    setWinter(!showWinter);
   };
 
   return (
@@ -40,7 +37,7 @@ function Toevoegen() {
           </div>
         </div>
         <div className={costumers.dashboard}>
-          <form onSubmit="">
+          <form onSubmit={addCostumer}>
             <div className={costumers.header}>
               <input className={add.name} type="text" name="name" placeholder="Naam" />
               <button className={add.submit} type="submit">Opslaan</button>
@@ -65,7 +62,7 @@ function Toevoegen() {
               <div className={add.box_full}>
                 <div className={add.box_full_menu}>
                   <p className={showSummer ? "" : add.box_full_menu_active} onClick={handleToggle}>Zomer</p>
-                  <p className={showWinter ? "" : add.box_full_menu_active} onClick={handleWinterToggle}>Winter</p>
+                  <p className={showSummer ? add.box_full_menu_active : ""} onClick={handleToggle}>Winter</p>
                 </div>
 
                 <div className={showSummer ? add.hidden : add.box_full_content}>
@@ -96,7 +93,7 @@ function Toevoegen() {
                   </div>
                 </div>
 
-                <div className={showWinter ? add.hidden : add.box_full_content}>
+                <div className={showSummer ? add.box_full_content : add.hidden}>
                   <div className={add.box_full_content_checkbox}>
                     <label className={add.box_small_label}>Groeven</label>
                     <div className={add.box_full_content_options}>
