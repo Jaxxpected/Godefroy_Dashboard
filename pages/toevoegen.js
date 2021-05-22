@@ -1,15 +1,24 @@
+import { useState } from "react";
 import Head from 'next/head'
 import Image from 'next/image'
-import Link from 'next/link'
 import InputMask from "react-input-mask";
-import data from '../data/costumerList.json'
+
 import styles from '../styles/Home.module.css'
 import costumers from '../styles/Klanten.module.css'
 import add from '../styles/Add.module.css'
 
-import { firestore } from "../utils/firebase"
-
 function Toevoegen() {
+
+  const [showSummer, setSummer] = useState("false");
+  const [showWinter, setWinter] = useState("false");
+
+  const handleToggle = () => {
+    setSummer(!showSummer);
+  };
+
+  const handleWinterToggle = () => {
+    setWinter(!showWinter);
+  };
 
   return (
     <div className={styles.container}>
@@ -25,9 +34,9 @@ function Toevoegen() {
             <Image src="/godefroy.svg" width='185px' height='55px' />
           </div>
           <div className={styles.links}>
-            <p className={styles.link_item}><Link href="/">Overzicht</Link></p>
-            <p className={styles.link_item}><Link href="/klanten">Klanten</Link></p>
-            <p className={styles.link_item}><Link href="/mail">Mail</Link></p>
+            <a href="/"><p className={styles.link_item}>Overzicht</p></a>
+            <a href="/klanten"><p className={styles["link_item"] + " " + styles["active"]}>Klanten</p></a>
+            <a href="/mail"><p className={styles.link_item}>Mail</p></a>
           </div>
         </div>
         <div className={costumers.dashboard}>
@@ -55,10 +64,11 @@ function Toevoegen() {
               </div>
               <div className={add.box_full}>
                 <div className={add.box_full_menu}>
-                  <p className={add.box_full_menu_active}>Zomer</p>
-                  <p>Winter</p>
+                  <p className={showSummer ? "" : add.box_full_menu_active} onClick={handleToggle}>Zomer</p>
+                  <p className={showWinter ? "" : add.box_full_menu_active} onClick={handleWinterToggle}>Winter</p>
                 </div>
-                <div className={add.box_full_content}>
+
+                <div className={showSummer ? add.hidden : add.box_full_content}>
                   <div className={add.box_full_content_checkbox}>
                     <label className={add.box_small_label}>Groeven</label>
                     <div className={add.box_full_content_options}>
@@ -85,6 +95,35 @@ function Toevoegen() {
                     <Image src="/car.svg" width='300px' height='370px' />
                   </div>
                 </div>
+
+                <div className={showWinter ? add.hidden : add.box_full_content}>
+                  <div className={add.box_full_content_checkbox}>
+                    <label className={add.box_small_label}>Groeven</label>
+                    <div className={add.box_full_content_options}>
+                      <div className={add.box_full_content_checklist}>
+                        <label className={add.box_small_checklist_label}>LV</label>
+                        <InputMask className={add.box_small_checklist_tire} mask="9,9" type="text" id="lv" name="lv" placeholder="x,x" />
+                        <input className={add.checkbox} type="checkbox" id="lv" name="lv" value="lv"></input>
+
+                        <label className={add.box_small_checklist_label}>RV</label>
+                        <InputMask className={add.box_small_checklist_tire} mask="9,9" type="text" id="rv" name="rv" placeholder="x,x" />
+                        <input className={add.checkbox} type="checkbox" id="rv" name="rv" value="rv"></input>
+
+                        <label className={add.box_small_checklist_label}>LA</label>
+                        <InputMask className={add.box_small_checklist_tire} mask="9,9" type="text" id="la" name="la" placeholder="x,x" />
+                        <input className={add.checkbox} type="checkbox" id="la" name="la" value="la"></input>
+
+                        <label className={add.box_small_checklist_label}>RA</label>
+                        <InputMask className={add.box_small_checklist_tire} mask="9,9" type="text" id="ra" name="ra" placeholder="x,x" />
+                        <input className={add.checkbox} type="checkbox" id="ra" name="ra" value="ra"></input>
+                      </div>
+                    </div>
+                  </div>
+                  <div className={add.box_full_content_image}>
+                    <Image src="/car.svg" width='300px' height='370px' />
+                  </div>
+                </div>
+
               </div>
               <div className={add.box_mediumplus}>
                 <label className={add.box_small_label}>Opmerkingen:</label>
