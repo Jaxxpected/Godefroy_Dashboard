@@ -1,48 +1,57 @@
-import { useEffect, useState } from 'react'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import { useQuery, gql } from "@apollo/client";
 
-import { firestore } from "../utils/firebase"
+const QUERY = gql`
+  query Customers {
+    customers {
+      name
+      plate
+      email
+      summerTires
+      winterTires
+    }
+  }
+`;
 
 export default function Home() {
 
-  const [users, setUsers] = useState([])
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await firestore.collection("costumer").get();
-      setUsers(data.docs.map(doc => doc.data()))
-    }
-    fetchData()
-  }, [])
+  const { data, loading, error } = useQuery(QUERY);
+  if (loading) {
+    return <h2>Loading...</h2>;
+  }
+  if (error) {
+    console.error(error);
+    return null;
+  }
 
   // Start count
   const collect = require('collect.js');
-  const num = users;
-  const data = collect(num);
-  const total = data.count();
+  const num = data.customers;
+  const all = collect(num);
+  const total = all.count();
   // End count
 
   // Start count summer tires
-  let summerTires = users.reduce(function (accumulator, users) {
-    return accumulator + users.Summer
+  let sumTires = data.customers.reduce(function (accumulator, data) {
+    return accumulator + data.summerTires
   }, 0)
   // End count tires
 
   // Start count winter tires
-  let winterTires = users.reduce(function (accumulator, users) {
-    return accumulator + users.Winter
+  let winTires = data.customers.reduce(function (accumulator, data) {
+    return accumulator + data.winterTires
   }, 0)
   // End count tires
 
   // Start count all tires
-  const atelier = summerTires + winterTires
+  const atelier = sumTires + winTires
 
-  const s = (summerTires / atelier) * 100
+  const s = (sumTires / atelier) * 100
   const spro = s.toFixed(0)
 
-  const w = (winterTires / atelier) * 100
+  const w = (winTires / atelier) * 100
   const wpro = w.toFixed(0)
   // End count all tires
 

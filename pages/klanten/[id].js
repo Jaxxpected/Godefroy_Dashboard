@@ -1,34 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Head from 'next/head'
 import Image from 'next/image'
 import InputMask from "react-input-mask";
-import { gql, useMutation } from '@apollo/client';
 
-import styles from '../styles/Home.module.css'
-import customers from '../styles/Klanten.module.css'
-import add from '../styles/Add.module.css'
+import styles from '../../styles/Home.module.css'
+import customers from '../../styles/Klanten.module.css'
+import add from '../../styles/Add.module.css'
 
-const CREATE = gql`
-  mutation addCustomer($name: String!, $plate: String!, $atelier: String!, $lang: String!, $email: String!, $remark: String!){
-    addCustomer(customer: { name: $name, plate: $plate, atelier: $atelier, lang: $lang, email: $email, remark: $remark}){
-      id
-    }
-  }
-`;
-
-function Toevoegen() {
-
-  const [name, setName] = useState('');
-  const [plate, setPlate] = useState('');
-  const [atelier, setAtelier] = useState('');
-  const [lang, setLang] = useState('');
-  const [email, setEmail] = useState('');
-  const [remark, setRemark] = useState('');
-
-  const [create, { data }] = useMutation(CREATE);
-  useEffect(() => {
-    if (data) { console.log(data); }
-  }, [data]);
+function Klantendetail() {
 
   const [showSummer, setSummer] = useState("false");
   const handleToggle = () => {
@@ -55,30 +34,27 @@ function Toevoegen() {
           </div>
         </div>
         <div className={customers.dashboard}>
-          <form onSubmit={e => {
-            e.preventDefault();
-            create({ variables: { name: name, plate: plate, atelier: atelier, lang: lang, email: email, remark: remark } });
-          }}>
+          <form>
             <div className={customers.header}>
-              <input className={add.name} placeholder="Naam" onChange={e => setName(e.target.value)} />
+              <input className={add.name} placeholder="Naam" />
               <button className={add.submit} type="submit">Opslaan</button>
             </div>
             <div className={add.box}>
               <div className={add.box_small}>
                 <label className={add.box_small_label}>Nummerplaat</label>
-                <input className={add.box_small_input} placeholder="X-XXX-XXX" onChange={e => setPlate(e.target.value)} />
+                <input className={add.box_small_input} placeholder="X-XXX-XXX" />
               </div>
               <div className={add.box_small}>
                 <label className={add.box_small_label}>Ligging</label>
-                <InputMask className={add.box_small_input} mask="a9-a9" placeholder="XX-XX" onChange={e => setAtelier(e.target.value)} />
+                <InputMask className={add.box_small_input} mask="a9-a9" placeholder="XX-XX" />
               </div>
               <div className={add.box_medium}>
                 <label className={add.box_small_label}>Taal</label>
-                <input className={add.box_small_input} placeholder="Taal" onChange={e => setLang(e.target.value)} />
+                <input className={add.box_small_input} placeholder="Taal" />
               </div>
               <div className={add.box_medium}>
                 <label className={add.box_small_label}>E-mail</label>
-                <input className={add.box_small_input} placeholder="x@gmail.com" onChange={e => setEmail(e.target.value)} />
+                <input className={add.box_small_input} placeholder="x@gmail.com" />
               </div>
               <div className={add.box_full}>
                 <div className={add.box_full_menu}>
@@ -145,7 +121,7 @@ function Toevoegen() {
               </div>
               <div className={add.box_mediumplus}>
                 <label className={add.box_small_label}>Opmerkingen:</label>
-                <textarea placeholder="Typ hier uw opmerking" onChange={e => setRemark(e.target.value)} />
+                <textarea placeholder="Typ hier uw opmerking" />
               </div>
               <div className={add.box_small}>
                 <label className={add.box_small_label}>Banden</label>
@@ -195,4 +171,4 @@ function Toevoegen() {
   )
 }
 
-export default Toevoegen
+export default Klantendetail
