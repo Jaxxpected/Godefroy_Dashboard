@@ -1,8 +1,8 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
-import styles from '../../styles/Home.module.css'
-import customers from '../../styles/Klanten.module.css'
+import styles from '../../../styles/Home.module.css'
+import customers from '../../../styles/Klanten.module.css'
 
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -47,16 +47,16 @@ function Klanten() {
             <Image src="/godefroy.svg" width='185px' height='55px' />
           </div>
           <div className={styles.links}>
-            <p className={styles.link_item}><Link href="/">Overzicht</Link></p>
-            <a href="/klanten"><p className={styles["link_item"] + " " + styles["active"]}>Klanten</p></a>
-            <p className={styles.link_item}><Link href="/mail">Mail</Link></p>
+            <p className={styles.link_item}><Link href="/admin/overzicht">Overzicht</Link></p>
+            <a href="/admin/klanten"><p className={styles["link_item"] + " " + styles["active"]}>Klanten</p></a>
+            <p className={styles.link_item}><Link href="/admin/mail">Mail</Link></p>
           </div>
         </div>
         <div className={customers.dashboard}>
           <div className={customers.header}>
             <h1>Klantenlijst</h1>
             <div>
-              <a href='/toevoegen' className={customers.header_add}><FontAwesomeIcon icon={faPlus} /></a>
+              <a href='/admin/toevoegen' className={customers.header_add}><FontAwesomeIcon icon={faPlus} /></a>
               <div className={customers.header_search}>
                 <p>Search</p>
                 {/* Here comes input field */}
@@ -72,7 +72,7 @@ function Klanten() {
               <p className={customers.filter_email}>E-mail</p>
             </div>
             {data.customers.map(costumer => (
-              <Link href={'/klanten/' + costumer.id} >
+              <Link href={'/admin/klanten/' + costumer.id} >
                 <div className={customers.client} key={costumer.name}>
                   <p className={customers.client_name}>{costumer.name}</p>
                   <p className={customers.client_plate}>{costumer.plate}</p>

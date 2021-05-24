@@ -1,9 +1,64 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-import auth from '../styles/Auth.module.css'
+import { useQuery, gql } from "@apollo/client";
 
-export default function Auth() {
+const QUERY = gql`
+  query Customers {
+    customers {
+      name
+      plate
+      email
+      summerTires
+      winterTires
+    }
+  }
+`;
+
+export default function Home() {
+
+  const { data, loading, error } = useQuery(QUERY);
+  if (loading) {
+    return <h2>Loading...</h2>;
+  }
+  if (error) {
+    console.error(error);
+    return null;
+  }
+
+  // Start count
+  const collect = require('collect.js');
+  const num = data.customers;
+  const all = collect(num);
+  const total = all.count();
+  // End count
+
+  // Start count summer tires
+  let sumTires = data.customers.reduce(function (accumulator, data) {
+    return accumulator + data.summerTires
+  }, 0)
+  // End count tires
+
+  // Start count winter tires
+  let winTires = data.customers.reduce(function (accumulator, data) {
+    return accumulator + data.winterTires
+  }, 0)
+  // End count tires
+
+  // Start count all tires
+  const atelier = sumTires + winTires
+
+  const s = (sumTires / atelier) * 100
+  const spro = s.toFixed(0)
+
+  const w = (winTires / atelier) * 100
+  const wpro = w.toFixed(0)
+  // End count all tires
+
+  // Start capaciteit
+  const tires = (atelier / 1240) * 100
+  const cap = tires.toFixed(1)
+  // End capaciteit
 
   return (
     <div className={styles.container}>
@@ -14,21 +69,76 @@ export default function Auth() {
       </Head>
 
       <main className={styles.main}>
-        <div className={auth.field}>
-          <div className={auth.quote}>
-            <p className={styles.dashboard_slogan}>Collect the wheels and control your garage online</p>
-            <Image src="/slogan.svg" width='350px' height='350px' />
+        <div className={styles.navigation}>
+          <div className={styles.logo}>
+            <Image src="/godefroy.svg" width='185px' height='55px' />
           </div>
-          <div className={auth.authentication}>
-            <form className={auth.login}>
-              <label className={auth.auth_label}>Naam</label>
-              <input className={auth.auth_name} placeholder="VUL HIER UW NAAM IN" required />
-              <div className={auth.auth_line}></div>
-              <label className={auth.auth_label}>Wachtwoord</label>
-              <input className={auth.auth_name} placeholder="VUL HIER UW WACHTWOORD IN" type="password" required />
-              <div className={auth.auth_line}></div>
-              <button className={auth.auth_submit} type="submit">Login</button>
-            </form>
+          <div className={styles.links}>
+            <a href="/login"><p className={styles.link_item}>Admin</p></a>
+            <a href="/"><p className={styles["link_item"] + " " + styles["active"]}>Overzicht</p></a>
+            <a href="/klanten"><p className={styles.link_item}>Klanten</p></a>
+            <a href="/mail"><p className={styles.link_item}>Mail</p></a>
+          </div>
+        </div>
+        <div className={styles.dashboard}>
+          <div className={styles.dashboard_info}>
+            <div className={styles.dashboard_title}>
+              <h1 className={styles.dashboard_title_text}><span>Bandenhotel</span> Godefroy</h1>
+            </div>
+            <div className={styles.dashboard_sloganbox}>
+              <p className={styles.dashboard_slogan}>Collect the wheels and control your garage online</p>
+              <Image src="/slogan.svg" width='350px' height='350px' />
+            </div>
+          </div>
+          <div className={styles.dashboard_data}>
+            <p className={styles.dashboard_user}>Alec M.</p>
+
+            <div className={styles.dashboard_user_data}>
+              <p className={styles.dashboard_user_data_title}>Klanten</p>
+              <p className={styles.dashboard_user_data_input}>{total}</p>
+            </div>
+
+            <div className={styles.dashboard_user_data}>
+              <p className={styles.dashboard_user_data_title}>Aantal banden</p>
+              <p className={styles.dashboard_user_data_input}>{atelier}</p>
+            </div>
+
+            <div className={styles.dashboard_user_data}>
+              <p className={styles.dashboard_user_data_title}>Zomerbanden</p>
+              <div className={styles.dashboard_user_data_status}>
+                <div className={styles.dashboard_user_data_status_bar}>
+                  <div style={{ width: spro + '%', backgroundColor: '#E9C46A' }}></div>
+                </div>
+                <div className={styles.dashboard_user_data_status_data}>
+                  <p>{spro}%</p>
+                </div>
+              </div>
+            </div>
+
+            <div className={styles.dashboard_user_data}>
+              <p className={styles.dashboard_user_data_title}>Winterbanden</p>
+              <div className={styles.dashboard_user_data_status}>
+                <div className={styles.dashboard_user_data_status_bar}>
+                  <div style={{ width: wpro + '%', backgroundColor: '#E9C46A' }}></div>
+                </div>
+                <div className={styles.dashboard_user_data_status_data}>
+                  <p>{wpro}%</p>
+                </div>
+              </div>
+            </div>
+
+            <div className={styles.dashboard_user_data}>
+              <p className={styles.dashboard_user_data_title}>Capaciteit atelier</p>
+              <div className={styles.dashboard_user_data_status}>
+                <div className={styles.dashboard_user_data_status_bar}>
+                  <div style={{ width: cap + '%', backgroundColor: '#264653' }}></div>
+                </div>
+                <div className={styles.dashboard_user_data_status_data}>
+                  <p>{cap}%</p>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </main>

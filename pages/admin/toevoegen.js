@@ -49,7 +49,7 @@ function Toevoegen() {
             <Image src="/godefroy.svg" width='185px' height='55px' />
           </div>
           <div className={styles.links}>
-            <a href="/"><p className={styles.link_item}>Overzicht</p></a>
+            <a href="/overzicht"><p className={styles.link_item}>Overzicht</p></a>
             <a href="/klanten"><p className={styles["link_item"] + " " + styles["active"]}>Klanten</p></a>
             <a href="/mail"><p className={styles.link_item}>Mail</p></a>
           </div>
@@ -172,6 +172,17 @@ function Toevoegen() {
                   <p>Velg</p>
                 </div>
               </a>
+              <div className={add.automatic_mail}>
+                <p>Automatische mail</p>
+                <div className={add.automatic}>
+                  <div className={add.automatic_title}>
+                    <p>Groeven</p>
+                  </div>
+                  <a href="#" className={add.automatic_button}>
+                    <p>Verstuur</p>
+                  </a>
+                </div>
+              </div>
             </div>
           </form>
         </div>

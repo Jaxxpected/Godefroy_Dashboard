@@ -1,7 +1,10 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import styles from '../styles/Home.module.css'
-import { useQuery, gql } from "@apollo/client";
+import styles from '../../styles/Home.module.css'
+import { useQuery, gql, useLazyQuery, NetworkStatus } from "@apollo/client";
+import { FRAGMENT_USER_EMAIL } from '../../Fragments/gqlFragments';
+import { useError } from '../../Hooks';
+import { useEffect } from "react";
 
 const QUERY = gql`
   query Customers {
@@ -15,7 +18,43 @@ const QUERY = gql`
   }
 `;
 
-function Home() {
+const USERS = gql`
+  {
+    users {
+      ...UserEmail
+      password
+    }
+  }
+  ${FRAGMENT_USER_EMAIL}
+`
+const GET_USER_PASSWORD = gql`
+  query user($id: ID) {
+    user(id: $id) {
+      password
+    }
+  }
+`
+
+export default function Admin() {
+  const [handleGqlError] = useError();
+  const { load, err, d, refetch, networkStatus } = useQuery(USERS, {
+    onError: handleGqlError,
+    fetchPolicy: "cache-first",
+    notifyOnNetworkStatusChange: true,
+  });
+  const [getUser, lazyQueryParams] = useLazyQuery(GET_USER_PASSWORD);
+
+  useEffect(() => {
+    if (lazyQueryParams.d && lazyQueryParams.d.user) {
+      console.log(lazyQueryParams.d.user.password);
+    }
+  }, [lazyQueryParams.d])
+
+  if (networkStatus === NetworkStatus.refetch) return 'Refetching!';
+  if (load) return 'loading...';
+  if (err) return `ERROR: ${err.message}`;
+
+
 
   const { data, loading, error } = useQuery(QUERY);
   if (loading) {
@@ -74,9 +113,10 @@ function Home() {
             <Image src="/godefroy.svg" width='185px' height='55px' />
           </div>
           <div className={styles.links}>
-            <a href="/overzicht"><p className={styles["link_item"] + " " + styles["active"]}>Overzicht</p></a>
-            <a href="/klanten"><p className={styles.link_item}>Klanten</p></a>
-            <a href="/mail"><p className={styles.link_item}>Mail</p></a>
+            <a href="/admin"><p className={styles.link_item}>Overzicht</p></a>
+            <a href="/admin/klanten"><p className={styles.link_item}>Klanten</p></a>
+            <a href="/admin/mail"><p className={styles.link_item}>Mail</p></a>
+            <a href="/"><p className={styles.link_item}>Uitloggen</p></a>
           </div>
         </div>
         <div className={styles.dashboard}>
@@ -148,5 +188,3 @@ function Home() {
     </div>
   )
 }
-
-export default Home

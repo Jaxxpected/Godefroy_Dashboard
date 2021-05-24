@@ -62,4 +62,11 @@
   font-size: 18px;
   width: 190px;
   padding: 10px;
+  transition: 0.2s;
+}
+
+.auth_submit:hover {
+  background-color: #007dab;
+  cursor: pointer;
+  color: white;
 }

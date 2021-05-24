@@ -19,7 +19,7 @@ function Mail() {
             <Image src="/godefroy.svg" width='185px' height='55px' />
           </div>
           <div className={styles.links}>
-            <p className={styles.link_item}><Link href="/overzicht">Overzicht</Link></p>
+            <p className={styles.link_item}><Link href="/">Overzicht</Link></p>
             <p className={styles.link_item}><Link href="/klanten">Klanten</Link></p>
             <p className={styles.link_item}><Link href="/mail">Mail</Link></p>
           </div>
