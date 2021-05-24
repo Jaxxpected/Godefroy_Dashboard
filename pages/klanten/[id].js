@@ -7,7 +7,9 @@ import styles from '../../styles/Home.module.css'
 import customers from '../../styles/Klanten.module.css'
 import add from '../../styles/Add.module.css'
 
-function Klantendetail() {
+import { getAll, getById } from "../klanten/customer.service";
+
+function Klantendetail({ customer }) {
 
   const [showSummer, setSummer] = useState("false");
   const handleToggle = () => {
@@ -28,7 +30,7 @@ function Klantendetail() {
             <Image src="/godefroy.svg" width='185px' height='55px' />
           </div>
           <div className={styles.links}>
-            <a href="/"><p className={styles.link_item}>Overzicht</p></a>
+            <a href="/overzicht"><p className={styles.link_item}>Overzicht</p></a>
             <a href="/klanten"><p className={styles["link_item"] + " " + styles["active"]}>Klanten</p></a>
             <a href="/mail"><p className={styles.link_item}>Mail</p></a>
           </div>
@@ -36,7 +38,7 @@ function Klantendetail() {
         <div className={customers.dashboard}>
           <form>
             <div className={customers.header}>
-              <input className={add.name} placeholder="Naam" />
+              <input className={add.name} placeholder={customer.name} />
               <button className={add.submit} type="submit">Opslaan</button>
             </div>
             <div className={add.box}>
@@ -172,3 +174,19 @@ function Klantendetail() {
 }
 
 export default Klantendetail
+
+export async function getStaticPaths() {
+  const customers = await getAll();
+
+  const paths = customers.map((customer) => ({
+    params: { id: customer.id }, // Rename to `id`
+  }));
+
+  return { paths, fallback: false };
+}
+
+export async function getStaticProps({ params }) {
+  const customer = await getById(params.id); // Rename to `params.id`
+
+  return { props: { customer } };
+}
