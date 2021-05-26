@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import styles from '../../styles/Home.module.css'
 import customers from '../../styles/Klanten.module.css'
+import load from '../../styles/Load.module.css'
 
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -26,7 +27,7 @@ function Klanten() {
 
   const { data, loading, error } = useQuery(QUERY);
   if (loading) {
-    return <h2>Loading...</h2>;
+    return <div className={load.loading}><div><Image className={load.image} src="/loading.svg" width='350px' height='350px' /><h2>Loading...</h2></div></div>;
   }
   if (error) {
     console.error(error);

@@ -1,0 +1,33 @@
+.loading {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loading > div {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.loading > div > h2 {
+  font-size: 34px;
+  margin-top: 20px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .image {
+    animation: image-spin infinite 15s linear;
+  }
+}
+
+@keyframes image-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

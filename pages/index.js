@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import load from '../styles/Load.module.css'
 import { useQuery, gql } from "@apollo/client";
 
 const QUERY = gql`
@@ -19,7 +20,7 @@ export default function Home() {
 
   const { data, loading, error } = useQuery(QUERY);
   if (loading) {
-    return <h2>Loading...</h2>;
+    return <div className={load.loading}><div><Image className={load.image} src="/loading.svg" width='350px' height='350px' /><h2>Loading...</h2></div></div>;
   }
   if (error) {
     console.error(error);
