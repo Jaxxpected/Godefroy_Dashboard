@@ -4,6 +4,8 @@ import styles from '../styles/Home.module.css'
 import load from '../styles/Load.module.css'
 import { useQuery, gql } from "@apollo/client";
 
+import { GraphQLClient } from 'graphql-request'
+
 const QUERY = gql`
   query Customers {
     customers {
@@ -16,7 +18,7 @@ const QUERY = gql`
   }
 `;
 
-export default function Home() {
+export default function Home({ customers }) {
 
   const { data, loading, error } = useQuery(QUERY);
   if (loading) {
@@ -150,4 +152,25 @@ export default function Home() {
       </footer>
     </div>
   )
+}
+
+export async function getStaticProps() {
+  const graph = new GraphQLClient(
+    "https://godefroy-api.herokuapp.com/"
+  );
+
+  const { customers } = await graph.request(
+    `
+    {
+      customers {
+        name
+      }
+    }
+    `
+  );
+  return {
+    props: {
+      customers,
+    }
+  }
 }

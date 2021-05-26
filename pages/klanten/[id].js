@@ -7,7 +7,11 @@ import styles from '../../styles/Home.module.css'
 import customers from '../../styles/Klanten.module.css'
 import add from '../../styles/Add.module.css'
 
-import { getAll, getById } from "../klanten/customer.service";
+import { GraphQLClient } from 'graphql-request'
+
+const graph = new GraphQLClient(
+  "https://godefroy-api.herokuapp.com/"
+);
 
 function Klantendetail({ customer }) {
 
@@ -30,7 +34,7 @@ function Klantendetail({ customer }) {
             <Image src="/godefroy.svg" width='185px' height='55px' />
           </div>
           <div className={styles.links}>
-            <a href="/overzicht"><p className={styles.link_item}>Overzicht</p></a>
+            <a href="/"><p className={styles.link_item}>Overzicht</p></a>
             <a href="/klanten"><p className={styles["link_item"] + " " + styles["active"]}>Klanten</p></a>
             <a href="/mail"><p className={styles.link_item}>Mail</p></a>
           </div>
@@ -38,25 +42,25 @@ function Klantendetail({ customer }) {
         <div className={customers.dashboard}>
           <form>
             <div className={customers.header}>
-              <input className={add.name} placeholder={customer.name} />
+              <input className={add.name} defaultValue={customer.name} />
               <button className={add.submit} type="submit">Opslaan</button>
             </div>
             <div className={add.box}>
               <div className={add.box_small}>
                 <label className={add.box_small_label}>Nummerplaat</label>
-                <input className={add.box_small_input} placeholder="X-XXX-XXX" />
+                <input className={add.box_small_input} defaultValue={customer.plate} />
               </div>
               <div className={add.box_small}>
                 <label className={add.box_small_label}>Ligging</label>
-                <InputMask className={add.box_small_input} mask="a9-a9" placeholder="XX-XX" />
+                <InputMask className={add.box_small_input} mask="a9-a9" defaultValue={customer.atelier} />
               </div>
               <div className={add.box_medium}>
                 <label className={add.box_small_label}>Taal</label>
-                <input className={add.box_small_input} placeholder="Taal" />
+                <input className={add.box_small_input} defaultValue={customer.lang} />
               </div>
               <div className={add.box_medium}>
                 <label className={add.box_small_label}>E-mail</label>
-                <input className={add.box_small_input} placeholder="x@gmail.com" />
+                <input className={add.box_small_input} defaultValue={customer.email} />
               </div>
               <div className={add.box_full}>
                 <div className={add.box_full_menu}>
@@ -66,7 +70,7 @@ function Klantendetail({ customer }) {
 
                 <div className={showSummer ? add.hidden : add.box_full_content}>
                   <div className={add.box_full_content_checkbox}>
-                    <label className={add.box_small_label}>Groeven</label>
+                    <label className={add.box_small_label}>Profielen</label>
                     <div className={add.box_full_content_options}>
                       <div className={add.box_full_content_checklist}>
                         <label className={add.box_small_checklist_label}>LV</label>
@@ -150,17 +154,6 @@ function Klantendetail({ customer }) {
                   <p>Velg</p>
                 </div>
               </a>
-              <div className={add.automatic_mail}>
-                <p>Automatische mail</p>
-                <div className={add.automatic}>
-                  <div className={add.automatic_title}>
-                    <p>Groeven</p>
-                  </div>
-                  <a href="#" className={add.automatic_button}>
-                    <p>Verstuur</p>
-                  </a>
-                </div>
-              </div>
             </div>
           </form>
         </div>
@@ -175,18 +168,44 @@ function Klantendetail({ customer }) {
 
 export default Klantendetail
 
-export async function getStaticPaths() {
-  const customers = await getAll();
-
-  const paths = customers.map((customer) => ({
-    params: { id: customer.id }, // Rename to `id`
-  }));
-
-  return { paths, fallback: false };
+export async function getStaticProps({ params }) {
+  const { customer } = await graph.request(
+    `
+    query Customer($id: ID!) {
+      customer(id: $id) {
+        id
+        name
+        plate
+        atelier
+        lang
+        email
+      }
+    }
+    `, {
+    id: params.id
+  }
+  )
+  return {
+    props: {
+      customer
+    }
+  }
 }
 
-export async function getStaticProps({ params }) {
-  const customer = await getById(params.id); // Rename to `params.id`
-
-  return { props: { customer } };
+export async function getStaticPaths() {
+  const { customers } = await graph.request(
+    `
+    {
+      customers {
+        id
+      }
+    }
+    `
+  )
+  return {
+    paths: customers.map(({ id }) => ({
+      params: { id }
+    })),
+    fallback: false
+  }
 }
