@@ -49,7 +49,8 @@ function Login() {
               <label className={auth.auth_label}>Wachtwoord</label>
               <input className={auth.auth_name} placeholder="VUL HIER UW WACHTWOORD IN" onChange={e => setPassword(e.target.value)} type="password" required />
               <div className={auth.auth_line}></div>
-              <button className={auth.auth_submit} type="submit"><a href="/admin">Login</a></button>
+              <button className={auth.auth_submit} type="submit">Login</button>
+              <a href="/admin">Adminpaneel</a>
             </form>
           </div>
         </div>

@@ -1,8 +1,8 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
-import styles from '../styles/Home.module.css'
-import costumers from '../styles/Klanten.module.css'
+import styles from '../../styles/Home.module.css'
+import costumers from '../../styles/Klanten.module.css'
 
 function Mail() {
   return (
@@ -19,9 +19,10 @@ function Mail() {
             <Image src="/godefroy.svg" width='185px' height='55px' />
           </div>
           <div className={styles.links}>
-            <p className={styles.link_item}><Link href="/">Overzicht</Link></p>
-            <p className={styles.link_item}><Link href="/klanten">Klanten</Link></p>
-            <p className={styles.link_item}><Link href="/mail">Mail</Link></p>
+            <p className={styles.link_item}><Link href="/admin">Overzicht</Link></p>
+            <p className={styles.link_item}><Link href="/admin/klanten">Klanten</Link></p>
+            <p className={styles.link_item}><Link href="/admin/mail">Mail</Link></p>
+            <a href="/"><p className={styles.link_item}>Uitloggen</p></a>
           </div>
         </div>
         <div className={costumers.dashboard}>

@@ -47,9 +47,10 @@ function Klanten() {
             <Image src="/godefroy.svg" width='185px' height='55px' />
           </div>
           <div className={styles.links}>
-            <p className={styles.link_item}><Link href="/admin/overzicht">Overzicht</Link></p>
+            <p className={styles.link_item}><Link href="/admin">Overzicht</Link></p>
             <a href="/admin/klanten"><p className={styles["link_item"] + " " + styles["active"]}>Klanten</p></a>
             <p className={styles.link_item}><Link href="/admin/mail">Mail</Link></p>
+            <a href="/"><p className={styles.link_item}>Uitloggen</p></a>
           </div>
         </div>
         <div className={customers.dashboard}>

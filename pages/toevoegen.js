@@ -51,7 +51,6 @@ function Toevoegen() {
           <div className={styles.links}>
             <a href="/"><p className={styles.link_item}>Overzicht</p></a>
             <a href="/klanten"><p className={styles["link_item"] + " " + styles["active"]}>Klanten</p></a>
-            <a href="/mail"><p className={styles.link_item}>Mail</p></a>
           </div>
         </div>
         <div className={customers.dashboard}>

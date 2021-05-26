@@ -4,9 +4,9 @@ import Image from 'next/image'
 import InputMask from "react-input-mask";
 import { gql, useMutation } from '@apollo/client';
 
-import styles from '../styles/Home.module.css'
-import customers from '../styles/Klanten.module.css'
-import add from '../styles/Add.module.css'
+import styles from '../../styles/Home.module.css'
+import customers from '../../styles/Klanten.module.css'
+import add from '../../styles/Add.module.css'
 
 const CREATE = gql`
   mutation addCustomer($name: String!, $plate: String!, $atelier: String!, $lang: String!, $email: String!, $remark: String!){
@@ -49,9 +49,10 @@ function Toevoegen() {
             <Image src="/godefroy.svg" width='185px' height='55px' />
           </div>
           <div className={styles.links}>
-            <a href="/overzicht"><p className={styles.link_item}>Overzicht</p></a>
-            <a href="/klanten"><p className={styles["link_item"] + " " + styles["active"]}>Klanten</p></a>
-            <a href="/mail"><p className={styles.link_item}>Mail</p></a>
+            <a href="/admin"><p className={styles.link_item}>Overzicht</p></a>
+            <a href="/admin/klanten"><p className={styles["link_item"] + " " + styles["active"]}>Klanten</p></a>
+            <a href="/admin/mail"><p className={styles.link_item}>Mail</p></a>
+            <a href="/"><p className={styles.link_item}>Uitloggen</p></a>
           </div>
         </div>
         <div className={customers.dashboard}>

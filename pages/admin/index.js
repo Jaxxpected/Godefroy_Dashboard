@@ -1,10 +1,7 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../../styles/Home.module.css'
-import { useQuery, gql, useLazyQuery, NetworkStatus } from "@apollo/client";
-import { FRAGMENT_USER_EMAIL } from '../../Fragments/gqlFragments';
-import { useError } from '../../Hooks';
-import { useEffect } from "react";
+import { useQuery, gql } from "@apollo/client";
 
 const QUERY = gql`
   query Customers {
@@ -18,44 +15,7 @@ const QUERY = gql`
   }
 `;
 
-const USERS = gql`
-  {
-    users {
-      ...UserEmail
-      password
-    }
-  }
-  ${FRAGMENT_USER_EMAIL}
-`
-const GET_USER_PASSWORD = gql`
-  query user($id: ID) {
-    user(id: $id) {
-      password
-    }
-  }
-`
-
 export default function Admin() {
-  const [handleGqlError] = useError();
-  const { load, err, d, refetch, networkStatus } = useQuery(USERS, {
-    onError: handleGqlError,
-    fetchPolicy: "cache-first",
-    notifyOnNetworkStatusChange: true,
-  });
-  const [getUser, lazyQueryParams] = useLazyQuery(GET_USER_PASSWORD);
-
-  useEffect(() => {
-    if (lazyQueryParams.d && lazyQueryParams.d.user) {
-      console.log(lazyQueryParams.d.user.password);
-    }
-  }, [lazyQueryParams.d])
-
-  if (networkStatus === NetworkStatus.refetch) return 'Refetching!';
-  if (load) return 'loading...';
-  if (err) return `ERROR: ${err.message}`;
-
-
-
   const { data, loading, error } = useQuery(QUERY);
   if (loading) {
     return <h2>Loading...</h2>;

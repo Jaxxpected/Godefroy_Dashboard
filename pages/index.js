@@ -39,6 +39,8 @@ export default function Home() {
   }, 0)
   // End count tires
 
+  console.log(data.customers)
+
   // Start count winter tires
   let winTires = data.customers.reduce(function (accumulator, data) {
     return accumulator + data.winterTires
@@ -77,7 +79,6 @@ export default function Home() {
             <a href="/login"><p className={styles.link_item}>Admin</p></a>
             <a href="/"><p className={styles["link_item"] + " " + styles["active"]}>Overzicht</p></a>
             <a href="/klanten"><p className={styles.link_item}>Klanten</p></a>
-            <a href="/mail"><p className={styles.link_item}>Mail</p></a>
           </div>
         </div>
         <div className={styles.dashboard}>
@@ -91,7 +92,7 @@ export default function Home() {
             </div>
           </div>
           <div className={styles.dashboard_data}>
-            <p className={styles.dashboard_user}>Alec M.</p>
+            <p className={styles.dashboard_user}>Werknemer</p>
 
             <div className={styles.dashboard_user_data}>
               <p className={styles.dashboard_user_data_title}>Klanten</p>

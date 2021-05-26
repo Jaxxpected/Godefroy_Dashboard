@@ -1,6 +1,6 @@
 // customer.service.js
 import { gql } from "@apollo/client";
-import apolloClient from "../../apollo-client";
+import apolloClient from "../../../apollo-client";
 
 export async function getAll() {
   return apolloClient
