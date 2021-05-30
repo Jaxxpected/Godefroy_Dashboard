@@ -51,7 +51,6 @@ function Klanten({ customers }) {
             <Image src="/godefroy.svg" width='185px' height='55px' />
           </div>
           <div className={styles.links}>
-            <a href="/login"><p className={styles.link_item}>Admin</p></a>
             <p className={styles.link_item}><Link href="/">Overzicht</Link></p>
             <a href="/klanten"><p className={styles["link_item"] + " " + styles["active"]}>Klanten</p></a>
           </div>

@@ -50,7 +50,6 @@ function Login() {
               <input className={auth.auth_name} placeholder="VUL HIER UW WACHTWOORD IN" onChange={e => setPassword(e.target.value)} type="password" required />
               <div className={auth.auth_line}></div>
               <button className={auth.auth_submit} type="submit">Login</button>
-              <a href="/admin">Adminpaneel</a>
             </form>
           </div>
         </div>

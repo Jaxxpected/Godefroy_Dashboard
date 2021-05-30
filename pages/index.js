@@ -42,8 +42,6 @@ export default function Home({ customers }) {
   }, 0)
   // End count tires
 
-  console.log(data.customers)
-
   // Start count winter tires
   let winTires = data.customers.reduce(function (accumulator, data) {
     return accumulator + data.winterTires
@@ -79,7 +77,6 @@ export default function Home({ customers }) {
             <Image src="/godefroy.svg" width='185px' height='55px' />
           </div>
           <div className={styles.links}>
-            <a href="/login"><p className={styles.link_item}>Admin</p></a>
             <a href="/"><p className={styles["link_item"] + " " + styles["active"]}>Overzicht</p></a>
             <a href="/klanten"><p className={styles.link_item}>Klanten</p></a>
           </div>

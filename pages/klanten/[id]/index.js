@@ -3,9 +3,9 @@ import Head from 'next/head'
 import Image from 'next/image'
 import InputMask from "react-input-mask";
 
-import styles from '../../styles/Home.module.css'
-import customers from '../../styles/Klanten.module.css'
-import add from '../../styles/Add.module.css'
+import styles from '../../../styles/Home.module.css'
+import customers from '../../../styles/Klanten.module.css'
+import add from '../../../styles/Add.module.css'
 
 import { GraphQLClient } from 'graphql-request'
 
@@ -36,7 +36,6 @@ function Klantendetail({ customer }) {
           <div className={styles.links}>
             <a href="/"><p className={styles.link_item}>Overzicht</p></a>
             <a href="/klanten"><p className={styles["link_item"] + " " + styles["active"]}>Klanten</p></a>
-            <a href="/mail"><p className={styles.link_item}>Mail</p></a>
           </div>
         </div>
         <div className={customers.dashboard}>
@@ -98,7 +97,7 @@ function Klantendetail({ customer }) {
 
                 <div className={showSummer ? add.box_full_content : add.hidden}>
                   <div className={add.box_full_content_checkbox}>
-                    <label className={add.box_small_label}>Groeven</label>
+                    <label className={add.box_small_label}>Profielen</label>
                     <div className={add.box_full_content_options}>
                       <div className={add.box_full_content_checklist}>
                         <label className={add.box_small_checklist_label}>LV</label>
@@ -147,13 +146,24 @@ function Klantendetail({ customer }) {
                   <input className={add.checkbox} type="checkbox" id="band" name="band" value="band"></input>
                 </div>
               </div>
-              <a href="#" className={add.box_small}>
+              <a href={'/klanten/' + customer.id + '/foto'} className={add.box_small}>
                 <p>Foto's</p>
                 <div className={add.box_small_pics}>
                   <p>Band</p>
                   <p>Velg</p>
                 </div>
               </a>
+              <div className={add.automatic_mail}>
+                <p>Automatische mail</p>
+                <div className={add.automatic}>
+                  <div className={add.automatic_title}>
+                    <p>Groeven</p>
+                  </div>
+                  <a href="#" className={add.automatic_button}>
+                    <p>Verstuur</p>
+                  </a>
+                </div>
+              </div>
             </div>
           </form>
         </div>

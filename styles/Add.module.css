@@ -49,6 +49,10 @@
   -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
   -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
   box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+.submit:hover {
+  background-color: #007dab;
 }
 
 .box {
@@ -322,8 +326,6 @@
   justify-content: center;
   align-items: center;
   background-color: #00aded;
-  /* border-top-left-radius: 25px;
-  border-bottom-right-radius: 25px; */
 }
 
 .automatic_button > p {
@@ -336,4 +338,79 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.imagebox {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  column-gap: 40px;
+  grid-template-rows: 1fr 1fr;
+  row-gap: 40px;
+}
+
+.imagebox_add {
+  width: 100%;
+  height: 350px;
+  -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.imagebox_add > svg {
+  width: 55px;
+  color: #acacac;
+}
+
+.viewimage {
+  width: 100%;
+  height: 350px;
+  -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.viewimage > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.viewimage_date {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(255, 255, 255, 0.75);
+  width: 100%;
+  padding: 0 20px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+}
+
+.viewimage_delete {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: rgba(255, 255, 255, 0.75);
+  width: 60px;
+  padding: 0 20px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+}
+
+.viewimage_delete > svg {
+  color: #00aded;
+}
+
+.viewimage_date > p {
+  color: #00aded;
+  font-size: 22px;
 }

@@ -87,7 +87,7 @@ function Toevoegen() {
 
                 <div className={showSummer ? add.hidden : add.box_full_content}>
                   <div className={add.box_full_content_checkbox}>
-                    <label className={add.box_small_label}>Groeven</label>
+                    <label className={add.box_small_label}>Profielen</label>
                     <div className={add.box_full_content_options}>
                       <div className={add.box_full_content_checklist}>
                         <label className={add.box_small_checklist_label}>LV</label>
@@ -115,7 +115,7 @@ function Toevoegen() {
 
                 <div className={showSummer ? add.box_full_content : add.hidden}>
                   <div className={add.box_full_content_checkbox}>
-                    <label className={add.box_small_label}>Groeven</label>
+                    <label className={add.box_small_label}>Profielen</label>
                     <div className={add.box_full_content_options}>
                       <div className={add.box_full_content_checklist}>
                         <label className={add.box_small_checklist_label}>LV</label>
