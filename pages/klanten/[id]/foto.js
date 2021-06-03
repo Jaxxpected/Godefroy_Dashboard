@@ -33,7 +33,7 @@ function Fotodetail({ customer }) {
         <div className={customers.dashboard}>
           <form>
             <div className={customers.header}>
-              <input className={add.name} defaultValue={customer.name} />
+              <input className={add.name} value={customer.name} />
               <button className={add.submit} type="submit">Opslaan</button>
             </div>
             <div className={add.imagebox}>

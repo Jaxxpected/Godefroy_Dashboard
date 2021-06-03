@@ -62,7 +62,6 @@ function Klanten({ customers }) {
               <a href='/toevoegen' className={customer.header_add}><FontAwesomeIcon icon={faPlus} /></a>
               <div className={customer.header_search}>
                 <p>Search</p>
-                {/* Here comes input field */}
               </div>
             </div>
           </div>
@@ -73,6 +72,7 @@ function Klanten({ customers }) {
               <p className={customer.filter_lang}>Taal</p>
               <p className={customer.filter_atelier}>Plaats</p>
               <p className={customer.filter_email}>E-mail</p>
+              <p className={customer.filter_foto}>Foto's</p>
             </div>
             {customers.map(({ id, name, plate, lang, atelier, email }) => (
               <Link href={'/klanten/' + id} key={id} >
@@ -82,6 +82,7 @@ function Klanten({ customers }) {
                   <p className={customer.lang}>{lang}</p>
                   <p className={customer.atelier}>{atelier}</p>
                   <p className={customer.email}>{email}</p>
+                  <Link className={customer.foto} href={'/klanten/' + id + '/foto'}>Foto's bekijken</Link>
                 </div>
               </Link>
             ))}

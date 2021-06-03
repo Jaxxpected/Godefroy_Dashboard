@@ -151,7 +151,7 @@ function Toevoegen() {
                 <div className={add.box_small_checklist}>
                   <label className={add.box_small_checklist_label}>Winter</label>
                   <input className={add.checkbox} type="checkbox" id="winter" name="winter" value="winter"></input>
-                  <label className={add.box_small_checklist_label}>Summer</label>
+                  <label className={add.box_small_checklist_label}>Zomer</label>
                   <input className={add.checkbox} type="checkbox" id="summer" name="summer" value="summer"></input>
                 </div>
               </div>
@@ -164,13 +164,6 @@ function Toevoegen() {
                   <input className={add.checkbox} type="checkbox" id="band" name="band" value="band"></input>
                 </div>
               </div>
-              <a href="#" className={add.box_small}>
-                <p>Foto's</p>
-                <div className={add.box_small_pics}>
-                  <p>Band</p>
-                  <p>Velg</p>
-                </div>
-              </a>
             </div>
           </form>
         </div>
