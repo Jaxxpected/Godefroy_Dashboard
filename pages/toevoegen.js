@@ -9,8 +9,23 @@ import customers from '../styles/Klanten.module.css'
 import add from '../styles/Add.module.css'
 
 const CREATE = gql`
-  mutation addCustomer($name: String!, $plate: String!, $atelier: String!, $lang: String!, $email: String!, $remark: String!){
-    addCustomer(customer: { name: $name, plate: $plate, atelier: $atelier, lang: $lang, email: $email, remark: $remark}){
+  mutation addCustomer($name: String!, $plate: String!, $atelier: String!, $lang: String!, $email: String!, $remark: String!, $wra: String!){
+    addCustomer(customer: { 
+      name: $name, 
+      plate: $plate, 
+      atelier: $atelier, 
+      lang: $lang, 
+      email: $email, 
+      remark: $remark,
+      slv: $slv,
+      sla: $sla,
+      srv: $srv,
+      sra: $sra,
+      wlv: $wlv,
+      wla: $wla,
+      wrv: $wrv,
+      wra: $wra
+      }){
       id
     }
   }
@@ -24,6 +39,14 @@ function Toevoegen() {
   const [lang, setLang] = useState('');
   const [email, setEmail] = useState('');
   const [remark, setRemark] = useState('');
+  const [slv, setSlv] = useState('')
+  const [sla, setSla] = useState('')
+  const [srv, setSrv] = useState('')
+  const [sra, setSra] = useState('')
+  const [wlv, setWlv] = useState('')
+  const [wla, setWla] = useState('')
+  const [wrv, setWrv] = useState('')
+  const [wra, setWra] = useState('')
 
   const [create, { data }] = useMutation(CREATE);
   useEffect(() => {
@@ -56,7 +79,7 @@ function Toevoegen() {
         <div className={customers.dashboard}>
           <form onSubmit={e => {
             e.preventDefault();
-            create({ variables: { name: name, plate: plate, atelier: atelier, lang: lang, email: email, remark: remark } });
+            create({ variables: { name: name, plate: plate, atelier: atelier, lang: lang, email: email, remark: remark, slv: slv, sla: sla, srv: srv, sra: sra, wlv: wlv, wla: wla, wrv: wrv, wra: wra } });
           }}>
             <div className={customers.header}>
               <input className={add.name} placeholder="Naam" onChange={e => setName(e.target.value)} />
@@ -91,19 +114,19 @@ function Toevoegen() {
                     <div className={add.box_full_content_options}>
                       <div className={add.box_full_content_checklist}>
                         <label className={add.box_small_checklist_label}>LV</label>
-                        <InputMask className={add.box_small_checklist_tire} mask="9,9" type="text" id="lv" name="lv" placeholder="x,x" />
+                        <InputMask className={add.box_small_checklist_tire} mask="9,9" type="text" id="lv" name="lv" placeholder="x,x" onChange={e => setSlv(e.target.value)} />
                         <input className={add.checkbox} type="checkbox" id="lv" name="lv" value="lv"></input>
 
                         <label className={add.box_small_checklist_label}>RV</label>
-                        <InputMask className={add.box_small_checklist_tire} mask="9,9" type="text" id="rv" name="rv" placeholder="x,x" />
+                        <InputMask className={add.box_small_checklist_tire} mask="9,9" type="text" id="rv" name="rv" placeholder="x,x" onChange={e => setSrv(e.target.value)} />
                         <input className={add.checkbox} type="checkbox" id="rv" name="rv" value="rv"></input>
 
                         <label className={add.box_small_checklist_label}>LA</label>
-                        <InputMask className={add.box_small_checklist_tire} mask="9,9" type="text" id="la" name="la" placeholder="x,x" />
+                        <InputMask className={add.box_small_checklist_tire} mask="9,9" type="text" id="la" name="la" placeholder="x,x" onChange={e => setSla(e.target.value)} />
                         <input className={add.checkbox} type="checkbox" id="la" name="la" value="la"></input>
 
                         <label className={add.box_small_checklist_label}>RA</label>
-                        <InputMask className={add.box_small_checklist_tire} mask="9,9" type="text" id="ra" name="ra" placeholder="x,x" />
+                        <InputMask className={add.box_small_checklist_tire} mask="9,9" type="text" id="ra" name="ra" placeholder="x,x" onChange={e => setSra(e.target.value)} />
                         <input className={add.checkbox} type="checkbox" id="ra" name="ra" value="ra"></input>
                       </div>
                     </div>
@@ -119,19 +142,19 @@ function Toevoegen() {
                     <div className={add.box_full_content_options}>
                       <div className={add.box_full_content_checklist}>
                         <label className={add.box_small_checklist_label}>LV</label>
-                        <InputMask className={add.box_small_checklist_tire} mask="9,9" type="text" id="lv" name="lv" placeholder="x,x" />
+                        <InputMask className={add.box_small_checklist_tire} mask="9,9" type="text" id="lv" name="lv" placeholder="x,x" onChange={e => setWlv(e.target.value)} />
                         <input className={add.checkbox} type="checkbox" id="lv" name="lv" value="lv"></input>
 
                         <label className={add.box_small_checklist_label}>RV</label>
-                        <InputMask className={add.box_small_checklist_tire} mask="9,9" type="text" id="rv" name="rv" placeholder="x,x" />
+                        <InputMask className={add.box_small_checklist_tire} mask="9,9" type="text" id="rv" name="rv" placeholder="x,x" onChange={e => setWrv(e.target.value)} />
                         <input className={add.checkbox} type="checkbox" id="rv" name="rv" value="rv"></input>
 
                         <label className={add.box_small_checklist_label}>LA</label>
-                        <InputMask className={add.box_small_checklist_tire} mask="9,9" type="text" id="la" name="la" placeholder="x,x" />
+                        <InputMask className={add.box_small_checklist_tire} mask="9,9" type="text" id="la" name="la" placeholder="x,x" onChange={e => setWla(e.target.value)} />
                         <input className={add.checkbox} type="checkbox" id="la" name="la" value="la"></input>
 
                         <label className={add.box_small_checklist_label}>RA</label>
-                        <InputMask className={add.box_small_checklist_tire} mask="9,9" type="text" id="ra" name="ra" placeholder="x,x" />
+                        <InputMask className={add.box_small_checklist_tire} mask="9,9" type="text" id="ra" name="ra" placeholder="x,x" onChange={e => setWra(e.target.value)} />
                         <input className={add.checkbox} type="checkbox" id="ra" name="ra" value="ra"></input>
                       </div>
                     </div>

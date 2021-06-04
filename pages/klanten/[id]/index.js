@@ -10,38 +10,60 @@ import add from '../../../styles/Add.module.css'
 import { GraphQLClient } from 'graphql-request'
 import { gql, useMutation } from '@apollo/client';
 
+import { useForm } from "react-hook-form";
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
+
 const graph = new GraphQLClient(
   "https://godefroy-api.herokuapp.com/"
 );
 
-
 function Klantendetail({ customer }) {
-
-  const customerId = JSON.stringify(customer.id);
-
-  const UPDATE_CUSTOMER = gql`
-  mutation updateCustomer ($name: String, $plate: String){
-    updateCustomer(customerId: ${customerId},
-      customer: {
-      name: $name,
-      plate: $plate,
-      }){id}
-    }
-  `;
-
-  const [name, setName] = useState('');
-  const [plate, setPlate] = useState('');
-  const [updateCustomer, updatedCustomer] = useMutation(UPDATE_CUSTOMER);
 
   const [showSummer, setSummer] = useState("false");
   const handleToggle = () => {
     setSummer(!showSummer);
   };
 
-  useEffect(() => {
-    if (updatedCustomer) {
+  const customerId = JSON.stringify(customer.id);
+
+  const UPDATE_CUSTOMER = gql`
+  mutation updateCustomer ($name: String, $plate: String, $lang: String, $atelier: String){
+    updateCustomer(customerId: ${customerId},
+      customer: {
+      name: $name,
+      plate: $plate,
+      lang: $lang,
+      atelier: $atelier,
+      }){id}
     }
-  }, [updatedCustomer]);
+  `;
+
+  const schema = yup.object().shape({
+    name: yup.string().required(),
+    plate: yup.string().required(),
+    atelier: yup.string().required(),
+    lang: yup.string().required(),
+    email: yup.string().required(),
+  });
+
+  const { name, plate } = customer;
+
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    resolver: yupResolver(schema)
+  });
+
+  const [updateCustomer, { loading: updateCustomerLoading, error: updateCustomerError }] = useMutation(UPDATE_CUSTOMER);
+
+  const handle = (customer) => {
+    const customerFormData = {
+      ...customer,
+    }
+
+    updateCustomer({
+      variables: customerFormData
+    })
+  };
 
   return (
     <div className={styles.container}>
@@ -61,54 +83,63 @@ function Klantendetail({ customer }) {
             <a href="/klanten"><p className={styles["link_item"] + " " + styles["active"]}>Klanten</p></a>
           </div>
         </div>
+
         <div className={customers.dashboard}>
-          <form onSubmit={e => {
-            e.preventDefault();
-            updateCustomer({ variables: { name: name, plate: plate } })
-          }}>
+          <form onSubmit={handleSubmit(handle)}>
+
             <div className={customers.header}>
-              <input className={add.name} type="text" name="name" defaultValue={customer.name} onChange={e => setName(e.target.value)} />
+              <input {...register("name")} className={add.name} placeholder="Naam" defaultValue={name} />
               <button className={add.submit} type="submit" value="Submit">Opslaan</button>
             </div>
+
             <div className={add.box}>
+
               <div className={add.box_small}>
                 <label className={add.box_small_label}>Nummerplaat</label>
-                <input className={add.box_small_input} type="text" name="plate" defaultValue={customer.plate} onChange={e => setPlate(e.target.value)} />
+                <input {...register("plate")} className={add.box_small_input} placeholder="Nummerplaat" defaultValue={plate} />
               </div>
+
               <div className={add.box_small}>
                 <label className={add.box_small_label}>Ligging</label>
-                <InputMask className={add.box_small_input} type="text" mask="a9-a9" defaultValue={customer.atelier} />
+                <InputMask {...register("atelier")} className={add.box_small_input} mask="a9-a9" placeholder="X1-X1" defaultValue={customer.atelier} />
               </div>
+
               <div className={add.box_medium}>
                 <label className={add.box_small_label}>Taal</label>
                 {/* <input className={add.box_small_input} defaultValue={customer.lang} /> */}
-                <select className={add.box_small_input}>
-                  <option value="" selected disabled hidden>Choose here</option>
+                <select {...register("lang")} className={add.box_small_input}>
                   <option value="Nederlands">Nederlands</option>
                   <option value="Frans">Frans</option>
                   <option value="Engels">Engels</option>
                 </select>
               </div>
+
               <div className={add.box_medium}>
                 <label className={add.box_small_label}>E-mail</label>
-                <input className={add.box_small_input} defaultValue={customer.email} />
+                {/* <input className={add.box_small_input} /> */}
+                <input {...register("email")} className={add.box_small_input} placeholder="E-mail" defaultValue={customer.email} />
               </div>
+
               <div className={add.box_full}>
+
                 <div className={add.box_full_menu}>
                   <p className={showSummer ? add.box_full_menu_active : ""} onClick={handleToggle}>Zomer</p>
                   <p className={showSummer ? "" : add.box_full_menu_active} onClick={handleToggle}>Winter</p>
                 </div>
+
                 <div className={showSummer ? add.box_full_content : add.hidden}>
                   <div className={add.box_full_content_checkbox}>
                     <label className={add.box_small_label}>Profielen</label>
                     <div className={add.box_full_content_options}>
                       <div className={add.box_full_content_checklist}>
                         <label className={add.box_small_checklist_label}>LV</label>
-                        <InputMask className={add.box_small_checklist_tire} mask="9,9" defaultValue={customer.slv} placeholder="x,x" />
+                        {/* <InputMask className={add.box_small_checklist_tire} mask="9,9" defaultValue={customer.slv} placeholder="x,x" /> */}
+                        <InputMask {...register("slv")} className={add.box_small_checklist_tire} mask="9,9" placeholder="X,X" defaultValue={customer.slv} />
                         <input className={add.checkbox} type="checkbox" id="lv" name="lv" value="lv"></input>
 
                         <label className={add.box_small_checklist_label}>RV</label>
-                        <InputMask className={add.box_small_checklist_tire} mask="9,9" defaultValue={customer.srv} placeholder="x,x" />
+                        {/* <InputMask className={add.box_small_checklist_tire} mask="9,9" defaultValue={customer.srv} placeholder="x,x" /> */}
+                        <InputMask {...register("srv")} className={add.box_small_checklist_tire} mask="9,9" placeholder="X,X" defaultValue={customer.srv} />
                         <input className={add.checkbox} type="checkbox" id="rv" name="rv" value="rv"></input>
 
                         <label className={add.box_small_checklist_label}>LA</label>
@@ -125,6 +156,7 @@ function Klantendetail({ customer }) {
                     <Image src="/car.svg" width='300px' height='370px' />
                   </div>
                 </div>
+
                 <div className={showSummer ? add.hidden : add.box_full_content}>
                   <div className={add.box_full_content_checkbox}>
                     <label className={add.box_small_label}>Profielen</label>
@@ -152,11 +184,15 @@ function Klantendetail({ customer }) {
                     <Image src="/car.svg" width='300px' height='370px' />
                   </div>
                 </div>
+
               </div>
+
               <div className={add.box_mediumplus}>
                 <label className={add.box_small_label}>Opmerkingen:</label>
-                <textarea placeholder="Typ hier uw opmerking" defaultValue={customer.remark} />
+                {/* <textarea placeholder="Typ hier uw opmerking" defaultValue={customer.remark} /> */}
+                <textarea {...register("opmerkingen")} className={add.box_small_input} placeholder="Typ hier uw opmerking.." defaultValue={customer.remark} />
               </div>
+
               <div className={add.box_small}>
                 <label className={add.box_small_label}>Banden</label>
                 <div className={add.box_small_checklist}>
@@ -166,6 +202,7 @@ function Klantendetail({ customer }) {
                   <input className={add.checkbox} type="checkbox" id="summer" name="summer" value="summer"></input>
                 </div>
               </div>
+
               <div className={add.box_small}>
                 <p>Kit of band</p>
                 <div className={add.box_small_checklist}>
@@ -175,9 +212,11 @@ function Klantendetail({ customer }) {
                   <input className={add.checkbox} type="checkbox" id="band" name="band" value="band"></input>
                 </div>
               </div>
+
               <a href={'/klanten/' + customer.id + '/foto'} className={add.box_clickable}>
                 <p>Foto's</p>
               </a>
+
               <div className={add.automatic_mail}>
                 <p>Automatische mail</p>
                 <div className={add.automatic}>
@@ -189,7 +228,9 @@ function Klantendetail({ customer }) {
                   </a>
                 </div>
               </div>
+
             </div>
+
           </form>
         </div>
       </main>
@@ -211,6 +252,7 @@ export async function getStaticProps({ params }) {
         id
         name
         plate
+        email
         atelier
         lang
         email
