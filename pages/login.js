@@ -7,9 +7,9 @@ import { gql, useLazyQuery } from "@apollo/client";
 import { useState, useEffect } from "react";
 
 const LOGIN = gql`
-  query login($email: String, $password: String){
-    login(user: { email: $email, password: $password}){
-      token
+  query login($email: String, $password: String) {
+    login(user: { email: $email, password: $password }) {
+      userId, token, admin
     }
   }
 `;
@@ -21,7 +21,11 @@ function Login() {
   const [login, { data }] = useLazyQuery(LOGIN);
 
   useEffect(() => {
-    if (data) { localStorage.setItem('token', data.login.token) }
+    if (!!data) {
+      window.localStorage.setItem('token', data.login.token);
+      window.localStorage.setItem('userId', data.login.userId);
+      window.localStorage.setItem('admin', data.login.admin);
+    }
   }, [data]);
 
   return (
@@ -39,7 +43,7 @@ function Login() {
             <Image src="/slogan.svg" width='350px' height='350px' />
           </div>
           <div className={auth.authentication}>
-            <form className={auth.login} onSubmit={e => {
+            <form className={auth.login} onSubmit={(e) => {
               e.preventDefault();
               login({ variables: { email: email, password: password } });
             }}>

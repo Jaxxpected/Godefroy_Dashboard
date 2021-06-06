@@ -1,4 +1,4 @@
-import { useState } from "react"
+import React, { useState, useEffect } from "react"
 import Head from 'next/head'
 import Image from 'next/image'
 import InputMask from "react-input-mask"
@@ -35,13 +35,10 @@ function Klantendetail({ customer }) {
     $atelier: String, 
     $email: String, 
     $remark: String, 
-
     $summerTires: Int, 
     $winterTires: Int, 
-
     $kit: Boolean, 
     $tire: Boolean,
-
     $slv: String,
     $sla: String,
     $sra: String,
@@ -59,13 +56,10 @@ function Klantendetail({ customer }) {
       atelier: $atelier,
       email: $email,
       remark: $remark,
-
       summerTires: $summerTires,
       winterTires: $winterTires,
-
       kit: $kit,
       tire: $tire,
-
       slv: $slv,
       sla: $sla,
       sra: $sra,
@@ -119,6 +113,12 @@ function Klantendetail({ customer }) {
     })
   };
 
+  const [admin, setAdmin] = useState();
+  useEffect(() => {
+    const admin = localStorage.getItem('admin', admin);
+    setAdmin(admin);
+  }, [admin]);
+
   return (
     <div className={styles.container}>
       <Head>
@@ -135,6 +135,10 @@ function Klantendetail({ customer }) {
           <div className={styles.links}>
             <a href="/"><p className={styles.link_item}>Overzicht</p></a>
             <a href="/klanten"><p className={styles["link_item"] + " " + styles["active"]}>Klanten</p></a>
+            <a href="/login"><p className={styles.link_item}>Admin login</p></a>
+            {admin ?
+              <a href="/logout"><p className={styles.link_item}>Logout</p></a>
+              : ''}
           </div>
         </div>
 
@@ -268,17 +272,19 @@ function Klantendetail({ customer }) {
                 <p>Foto's</p>
               </a>
 
-              <div className={add.automatic_mail}>
-                <p>Automatische mail</p>
-                <div className={add.automatic}>
-                  <div className={add.automatic_title}>
-                    <p>Profielen</p>
+              {admin ?
+                <div className={add.automatic_mail}>
+                  <p>Automatische mail</p>
+                  <div className={add.automatic}>
+                    <div className={add.automatic_title}>
+                      <p>Profielen</p>
+                    </div>
+                    <a href="#" className={add.automatic_button}>
+                      <p>Verstuur</p>
+                    </a>
                   </div>
-                  <a href="#" className={add.automatic_button}>
-                    <p>Verstuur</p>
-                  </a>
                 </div>
-              </div>
+                : ''}
 
             </div>
 

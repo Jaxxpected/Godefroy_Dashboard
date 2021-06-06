@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react"
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../../../styles/Home.module.css'
@@ -13,6 +14,13 @@ const graph = new GraphQLClient(
 );
 
 function Fotodetail({ customer }) {
+
+  const [admin, setAdmin] = useState();
+  useEffect(() => {
+    const admin = localStorage.getItem('admin', admin);
+    setAdmin(admin);
+  }, [admin]);
+
   return (
     <div className={styles.container}>
       <Head>
@@ -28,6 +36,9 @@ function Fotodetail({ customer }) {
           <div className={styles.links}>
             <a href="/"><p className={styles.link_item}>Overzicht</p></a>
             <a href="/klanten"><p className={styles["link_item"] + " " + styles["active"]}>Klanten</p></a>
+            {admin ?
+              <a href="/logout"><p className={styles.link_item}>Logout</p></a>
+              : ''}
           </div>
         </div>
         <div className={customers.dashboard}>
