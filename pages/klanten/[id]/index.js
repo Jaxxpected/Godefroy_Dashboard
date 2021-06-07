@@ -20,6 +20,14 @@ const graph = new GraphQLClient(
 
 function Klantendetail({ customer }) {
 
+  async function handleOnSubmit(e) {
+    e.preventDefault();
+    fetch('/api/mail'), {
+      method: 'post',
+      body: customer.email
+    }
+  }
+
   const [showSummer, setSummer] = useState("false");
   const handleToggle = () => {
     setSummer(!showSummer);
@@ -79,13 +87,10 @@ function Klantendetail({ customer }) {
     lang: yup.string().required(),
     email: yup.string(),
     remark: yup.string(),
-
     summerTires: yup.number().required(),
     winterTires: yup.number().required(),
-
     kit: yup.boolean(),
     tire: yup.boolean(),
-
     slv: yup.string(),
     sla: yup.string(),
     sra: yup.string(),
@@ -280,7 +285,7 @@ function Klantendetail({ customer }) {
                       <p>Profielen</p>
                     </div>
                     <a href="#" className={add.automatic_button}>
-                      <p>Verstuur</p>
+                      <p onClick={handleOnSubmit}>Verstuur</p>
                     </a>
                   </div>
                 </div>

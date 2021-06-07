@@ -83,7 +83,8 @@ export default function Home() {
           <div className={styles.links}>
             <a href="/"><p className={styles["link_item"] + " " + styles["active"]}>Overzicht</p></a>
             <a href="/klanten"><p className={styles.link_item}>Klanten</p></a>
-            <a href="/login"><p className={styles.link_item}>Admin login</p></a>
+            <a href="/login"><p className={styles.link_item}>Admin</p></a>
+            {/* This needs to be fixed */}
             {admin ?
               <a href="/logout"><p className={styles.link_item}>Logout</p></a>
               : ''}

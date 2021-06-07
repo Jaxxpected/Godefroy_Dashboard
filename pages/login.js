@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import auth from '../styles/Auth.module.css'
+import { useRouter } from 'next/router'
 
 import { gql, useLazyQuery } from "@apollo/client";
 import { useState, useEffect } from "react";
@@ -20,6 +21,8 @@ function Login() {
   const [password, setPassword] = useState('');
   const [login, { data }] = useLazyQuery(LOGIN);
 
+  const router = useRouter();
+
   useEffect(() => {
     if (!!data) {
       window.localStorage.setItem('token', data.login.token);
@@ -27,6 +30,10 @@ function Login() {
       window.localStorage.setItem('admin', data.login.admin);
     }
   }, [data]);
+
+  const navigation = () => {
+    // router.push('/');
+  }
 
   return (
     <div className={styles.container}>
@@ -46,6 +53,7 @@ function Login() {
             <form className={auth.login} onSubmit={(e) => {
               e.preventDefault();
               login({ variables: { email: email, password: password } });
+              navigation();
             }}>
               <label className={auth.auth_label}>E-mail</label>
               <input className={auth.auth_name} placeholder="VUL HIER UW E-MAIL IN" onChange={e => setEmail(e.target.value)} required />
