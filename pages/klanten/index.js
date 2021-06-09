@@ -26,6 +26,19 @@ export async function getStaticProps() {
         lang
         atelier
         email
+        remark
+        summerTires
+        winterTires
+        kit
+        tire
+        slv
+        sla
+        sra
+        srv
+        wlv
+        wla
+        wra
+        wrv
       }
     }
     `

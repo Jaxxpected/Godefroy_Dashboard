@@ -24,7 +24,7 @@ function Klantendetail({ customer }) {
     e.preventDefault();
     fetch('/api/mail'), {
       method: 'post',
-      body: customer.email
+      customer: customer.mail
     }
   }
 
@@ -39,12 +39,12 @@ function Klantendetail({ customer }) {
   mutation updateCustomer (
     $name: String, 
     $plate: String, 
-    $lang: String, 
     $atelier: String, 
+    $lang: String, 
     $email: String, 
     $remark: String, 
-    $summerTires: Int, 
-    $winterTires: Int, 
+    $summerTires: Int,
+    $winterTires: Int,
     $kit: Boolean, 
     $tire: Boolean,
     $slv: String,
@@ -60,8 +60,8 @@ function Klantendetail({ customer }) {
       customer: {
       name: $name,
       plate: $plate,
-      lang: $lang,
       atelier: $atelier,
+      lang: $lang,
       email: $email,
       remark: $remark,
       summerTires: $summerTires,
@@ -85,7 +85,7 @@ function Klantendetail({ customer }) {
     plate: yup.string().required(),
     atelier: yup.string().required(),
     lang: yup.string().required(),
-    email: yup.string(),
+    email: yup.string().required(),
     remark: yup.string(),
     summerTires: yup.number().required(),
     winterTires: yup.number().required(),
@@ -101,7 +101,7 @@ function Klantendetail({ customer }) {
     wrv: yup.string(),
   });
 
-  const { name, plate, lang, atelier, email, remark, kit, tire, summerTires, winterTires, slv, srv, sra, sla, wlv, wla, wra, wrv } = customer;
+  const { name, plate, atelier, lang, email, remark, summerTires, winterTires, kit, tire, slv, sla, sra, srv, wlv, wla, wra, wrv } = customer;
 
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(schema)
@@ -151,24 +151,26 @@ function Klantendetail({ customer }) {
           <form onSubmit={handleSubmit(handle)}>
 
             <div className={customers.header}>
-              <input {...register("name")} className={add.name} placeholder="Naam" defaultValue={name} />
+              <input {...register("name")} className={add.name} type="text" placeholder="Naam" defaultValue={name} />
+              <p>{errors.name?.message}</p>
               <button className={add.submit} type="submit" value="Submit">Opslaan</button>
             </div>
 
             <div className={add.box}>
 
               <div className={add.box_small}>
-                <label className={add.box_small_label}>Nummerplaat</label>
-                <input {...register("plate")} className={add.box_small_input} placeholder="Nummerplaat" defaultValue={plate} />
+                <label className={add.box_small_label}>Nummerplaat *</label>
+                <input {...register("plate")} className={add.box_small_input} type="text" placeholder="Nummerplaat" defaultValue={plate} />
+                <p>{errors.plate?.message}</p>
               </div>
 
               <div className={add.box_small}>
-                <label className={add.box_small_label}>Ligging</label>
+                <label className={add.box_small_label}>Ligging *</label>
                 <InputMask {...register("atelier")} className={add.box_small_input} mask="a9" placeholder="X1" defaultValue={atelier} />
               </div>
 
               <div className={add.box_medium}>
-                <label className={add.box_small_label}>Taal</label>
+                <label className={add.box_small_label}>Taal *</label>
                 <select {...register("lang")} className={add.box_small_input}>
                   <option value={lang}>{lang}</option>
                   <option value="Nederlands">Nederlands</option>
@@ -176,11 +178,13 @@ function Klantendetail({ customer }) {
                   <option value="Engels">Engels</option>
                   {/* selected={lang === value ? true : false} */}
                 </select>
+                <p>{errors.lang?.message}</p>
               </div>
 
               <div className={add.box_medium}>
-                <label className={add.box_small_label}>E-mail</label>
-                <input {...register("email")} className={add.box_small_input} placeholder="E-mail" defaultValue={email} />
+                <label className={add.box_small_label}>E-mail *</label>
+                <input {...register("email")} className={add.box_small_input} type="email" placeholder="E-mail" defaultValue={email} />
+                <p>{errors.email?.message}</p>
               </div>
 
               <div className={add.box_full}>
@@ -250,22 +254,24 @@ function Klantendetail({ customer }) {
 
               <div className={add.box_mediumplus}>
                 <label className={add.box_small_label}>Opmerkingen:</label>
-                <textarea {...register("remark")} className={add.box_small_input} placeholder="Typ hier uw opmerking.." defaultValue={remark} />
+                <textarea {...register("remark")} className={add.box_small_input} type="text" placeholder="Typ hier uw opmerking.." defaultValue={remark} />
               </div>
 
               <div className={add.box_small}>
                 <p>Aantal banden</p>
                 <div className={add.box_small_checklist}>
-                  <label className={add.box_small_checklist_label}>Zomer: </label>
-                  <InputMask {...register("summerTires")} className={add.box_small_input} mask="9" placeholder="X" defaultValue={summerTires} />
-                  <label className={add.box_small_checklist_label}>Winter</label>
-                  <InputMask {...register("winterTires")} className={add.box_small_input} mask="9" placeholder="X" defaultValue={winterTires} />
+                  <label className={add.box_small_checklist_label}>Zomer: *</label>
+                  <input {...register("summerTires")} className={add.box_small_input} placeholder="x" defaultValue={summerTires} />
+                  <p>{errors.summerTires?.message}</p>
+                  <label className={add.box_small_checklist_label}>Winter: *</label>
+                  <input {...register("winterTires")} className={add.box_small_input} placeholder="X" defaultValue={winterTires} />
+                  <p>{errors.winterTires?.message}</p>
                 </div>
               </div>
 
               <div className={add.box_small}>
                 <p>Kit of band</p>
-                <div className={add.box_small_checklist}>
+                <div className={add.box_small_checklist_two}>
                   <label className={add.box_small_checklist_label}>Kit</label>
                   <input {...register("kit")} id="kit" name="kit" type="checkbox" className={add.checkbox} defaultChecked={kit} />
                   <label className={add.box_small_checklist_label}>Band</label>
@@ -314,8 +320,8 @@ export async function getStaticProps({ params }) {
         id
         name
         plate
-        email
         atelier
+        email
         lang
         remark
         summerTires

@@ -8,49 +8,13 @@ import styles from '../styles/Home.module.css'
 import customers from '../styles/Klanten.module.css'
 import add from '../styles/Add.module.css'
 
-const ADD_CUSTOMER = gql`
-  mutation addCustomer(
-    $name: String, 
-    $plate: String, 
-    $lang: String, 
-    $atelier: String, 
-    $email: String, 
-    # $remark: String, 
-    # $summerTires: Int, 
-    # $winterTires: Int, 
-    # $kit: Boolean, 
-    # $tire: Boolean,
-    # $slv: String,
-    # $sla: String,
-    # $sra: String,
-    # $srv: String,
-    # $wlv: String,
-    # $wla: String,
-    # $wra: String,
-    # $wrv: String
-    ){
-    addCustomer(customer: { 
-      name: $name,
-      plate: $plate,
-      lang: $lang,
-      atelier: $atelier,
-      email: $email,
-      # remark: $remark,
-      # summerTires: $summerTires,
-      # winterTires: $winterTires,
-      # kit: $kit,
-      # tire: $tire,
-      # slv: $slv,
-      # sla: $sla,
-      # sra: $sra,
-      # srv: $srv,
-      # wlv: $wlv,
-      # wla: $wla,
-      # wra: $wra,
-      # wrv: $wrv,
-      }){id}
+const CREATE = gql`
+  mutation addCustomer($name: String!, $plate: String!, $atelier: String!, $lang: String!, $email: String!, $remark: String!){
+    addCustomer(customer: { name: $name, plate: $plate, atelier: $atelier, lang: $lang, email: $email, remark: $remark}){
+      id
     }
-  `;
+  }
+`;
 
 function Toevoegen() {
 
@@ -59,8 +23,9 @@ function Toevoegen() {
   const [atelier, setAtelier] = useState('');
   const [lang, setLang] = useState('');
   const [email, setEmail] = useState('');
+  const [remark, setRemark] = useState('');
 
-  const [create, { data }] = useMutation(ADD_CUSTOMER);
+  const [create, { data }] = useMutation(CREATE);
   useEffect(() => {
     if (data) { console.log(data); }
   }, [data]);
@@ -101,7 +66,7 @@ function Toevoegen() {
         <div className={customers.dashboard}>
           <form onSubmit={e => {
             e.preventDefault();
-            create({ variables: { name: name, plate: plate, atelier: atelier, lang: lang, email: email } });
+            create({ variables: { name: name, plate: plate, atelier: atelier, lang: lang, email: email, remark: remark } });
           }}>
             <div className={customers.header}>
               <input className={add.name} placeholder="Naam" onChange={e => setName(e.target.value)} />
@@ -213,7 +178,7 @@ function Toevoegen() {
 
               <div className={add.box_small}>
                 <p>Kit of band</p>
-                <div className={add.box_small_checklist}>
+                <div className={add.box_small_checklist_two}>
                   <label className={add.box_small_checklist_label}>Kit</label>
                   <input className={add.checkbox} type="checkbox" id="kit" name="kit" value="kit" />
                   <label className={add.box_small_checklist_label}>Band</label>
