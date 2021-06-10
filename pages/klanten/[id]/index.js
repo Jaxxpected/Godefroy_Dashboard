@@ -22,10 +22,10 @@ function Klantendetail({ customer }) {
 
   async function handleOnSubmit(e) {
     e.preventDefault();
-    fetch('/api/mail'), {
+    fetch('/api/mail', {
       method: 'post',
-      customer: customer.mail
-    }
+      body: customer.email
+    })
   }
 
   const [showSummer, setSummer] = useState("false");
