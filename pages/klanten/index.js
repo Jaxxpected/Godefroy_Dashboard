@@ -39,6 +39,14 @@ export async function getStaticProps() {
         wla
         wra
         wrv
+        slvp
+        slap
+        srap
+        srvp
+        wlvp
+        wlap
+        wrap
+        wrvp
       }
     }
     `

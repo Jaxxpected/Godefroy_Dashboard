@@ -3,11 +3,11 @@ const mail = require('@sendgrid/mail');
 mail.setApiKey(process.env.SENDGRID_API_KEY);
 
 export default (req, res) => {
-  const email = JSON.parse(req.body)
+  // const email = JSON.parse(req.body)
 
   const data = {
-    to: `${email}`,
-    // to: 'alecmega@student.arteveldehs.be',
+    // to: `${email}`,
+    to: 'godefroybritt@gmail.com',
     from: 'alecmeganck@icloud.com',
     subject: 'Dit is een testmail',
     templateId: 'd-c6531e7fdedc43a3986030db83461e49',

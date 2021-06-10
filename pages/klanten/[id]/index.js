@@ -54,7 +54,15 @@ function Klantendetail({ customer }) {
     $wlv: String,
     $wla: String,
     $wra: String,
-    $wrv: String
+    $wrv: String,
+    $slvp: Boolean,
+    $slap: Boolean,
+    $srap: Boolean,
+    $srvp: Boolean,
+    $wlvp: Boolean,
+    $wlap: Boolean,
+    $wrap: Boolean,
+    $wrvp: Boolean
     ){
     updateCustomer(customerId: ${customerId},
       customer: {
@@ -76,6 +84,14 @@ function Klantendetail({ customer }) {
       wla: $wla,
       wra: $wra,
       wrv: $wrv,
+      slvp: $slvp
+      slap: $slap
+      srap: $srap
+      srvp: $srvp
+      wlvp: $wlvp
+      wlap: $wlap
+      wrap: $wrap
+      wrvp: $wrvp
       }){id}
     }
   `;
@@ -99,9 +115,17 @@ function Klantendetail({ customer }) {
     wla: yup.string(),
     wra: yup.string(),
     wrv: yup.string(),
+    slvp: yup.boolean(),
+    slap: yup.boolean(),
+    srap: yup.boolean(),
+    srvp: yup.boolean(),
+    wlvp: yup.boolean(),
+    wlap: yup.boolean(),
+    wrap: yup.boolean(),
+    wrvp: yup.boolean()
   });
 
-  const { name, plate, atelier, lang, email, remark, summerTires, winterTires, kit, tire, slv, sla, sra, srv, wlv, wla, wra, wrv } = customer;
+  const { name, plate, atelier, lang, email, remark, summerTires, winterTires, kit, tire, slv, sla, sra, srv, wlv, wla, wra, wrv, slvp, slap, srap, srvp, wlvp, wlap, wrap, wrvp } = customer;
 
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(schema)
@@ -201,19 +225,19 @@ function Klantendetail({ customer }) {
                       <div className={add.box_full_content_checklist}>
                         <label className={add.box_small_checklist_label}>LV</label>
                         <InputMask {...register("slv")} className={add.box_small_checklist_tire} mask="9,9" placeholder="x,x" defaultValue={slv} />
-                        <input className={add.checkbox} type="checkbox" id="lv" name="lv" value="lv"></input>
+                        <input {...register("slvp")} className={add.checkbox} type="checkbox" id="lv" name="lv" defaultChecked={slvp} />
 
                         <label className={add.box_small_checklist_label}>RV</label>
                         <InputMask {...register("srv")} className={add.box_small_checklist_tire} mask="9,9" placeholder="x,x" defaultValue={srv} />
-                        <input className={add.checkbox} type="checkbox" id="rv" name="rv" value="rv"></input>
+                        <input {...register("srvp")} className={add.checkbox} type="checkbox" id="rv" name="rv" defaultChecked={srvp} />
 
                         <label className={add.box_small_checklist_label}>LA</label>
                         <InputMask {...register("sla")} className={add.box_small_checklist_tire} mask="9,9" placeholder="x,x" defaultValue={sla} />
-                        <input className={add.checkbox} type="checkbox" id="la" name="la" value="la"></input>
+                        <input {...register("slap")} className={add.checkbox} type="checkbox" id="la" name="la" defaultChecked={slap} />
 
                         <label className={add.box_small_checklist_label}>RA</label>
                         <InputMask {...register("sra")} className={add.box_small_checklist_tire} mask="9,9" placeholder="x,x" defaultValue={sra} />
-                        <input className={add.checkbox} type="checkbox" id="ra" name="ra" value="ra"></input>
+                        <input {...register("srap")} className={add.checkbox} type="checkbox" id="ra" name="ra" defaultChecked={srap} />
                       </div>
                     </div>
                   </div>
@@ -229,19 +253,19 @@ function Klantendetail({ customer }) {
                       <div className={add.box_full_content_checklist}>
                         <label className={add.box_small_checklist_label}>LV</label>
                         <InputMask {...register("wlv")} className={add.box_small_checklist_tire} mask="9,9" placeholder="x,x" defaultValue={wlv} />
-                        <input className={add.checkbox} type="checkbox" id="lv" name="lv" value="lv"></input>
+                        <input {...register("wlvp")} className={add.checkbox} type="checkbox" id="lv" name="lv" defaultChecked={wlvp} />
 
                         <label className={add.box_small_checklist_label}>RV</label>
                         <InputMask {...register("wrv")} className={add.box_small_checklist_tire} mask="9,9" placeholder="x,x" defaultValue={wrv} />
-                        <input className={add.checkbox} type="checkbox" id="rv" name="rv" value="rv"></input>
+                        <input {...register("wrvp")} className={add.checkbox} type="checkbox" id="rv" name="rv" value="rv" defaultChecked={wrvp} />
 
                         <label className={add.box_small_checklist_label}>LA</label>
                         <InputMask {...register("wla")} className={add.box_small_checklist_tire} mask="9,9" placeholder="x,x" defaultValue={wla} />
-                        <input className={add.checkbox} type="checkbox" id="la" name="la" value="la"></input>
+                        <input {...register("wlap")} className={add.checkbox} type="checkbox" id="la" name="la" defaultChecked={wlap} />
 
                         <label className={add.box_small_checklist_label}>RA</label>
                         <InputMask {...register("wra")} className={add.box_small_checklist_tire} mask="9,9" placeholder="x,x" defaultValue={wra} />
-                        <input className={add.checkbox} type="checkbox" id="ra" name="ra" value="ra"></input>
+                        <input {...register("wrap")} className={add.checkbox} type="checkbox" id="ra" name="ra" defaultChecked={wrap} />
                       </div>
                     </div>
                   </div>
@@ -336,6 +360,14 @@ export async function getStaticProps({ params }) {
         wla
         wrv
         wra
+        slvp
+        slap
+        srap
+        srvp
+        wlvp
+        wlap
+        wrap
+        wrvp
       }
     }
     `, {
