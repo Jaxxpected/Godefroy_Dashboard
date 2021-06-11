@@ -13,12 +13,15 @@ import { gql, useMutation } from '@apollo/client';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
+import { useRouter } from 'next/router'
 
 const graph = new GraphQLClient(
   "https://godefroy-api.herokuapp.com/"
 );
 
 function Klantendetail({ customer }) {
+
+  const router = useRouter();
 
   async function handleOnSubmit(e) {
     e.preventDefault();
@@ -140,6 +143,7 @@ function Klantendetail({ customer }) {
     updateCustomer({
       variables: customerFormData
     })
+    router.push('/klanten');
   };
 
   const [admin, setAdmin] = useState();
@@ -225,19 +229,19 @@ function Klantendetail({ customer }) {
                       <div className={add.box_full_content_checklist}>
                         <label className={add.box_small_checklist_label}>LV</label>
                         <InputMask {...register("slv")} className={add.box_small_checklist_tire} mask="9,9" placeholder="x,x" defaultValue={slv} />
-                        <input {...register("slvp")} className={add.checkbox} type="checkbox" id="lv" name="lv" defaultChecked={slvp} />
+                        <input {...register("slvp")} className={add.checkbox} type="checkbox" defaultChecked={slvp} />
 
                         <label className={add.box_small_checklist_label}>RV</label>
                         <InputMask {...register("srv")} className={add.box_small_checklist_tire} mask="9,9" placeholder="x,x" defaultValue={srv} />
-                        <input {...register("srvp")} className={add.checkbox} type="checkbox" id="rv" name="rv" defaultChecked={srvp} />
+                        <input {...register("srvp")} className={add.checkbox} type="checkbox" defaultChecked={srvp} />
 
                         <label className={add.box_small_checklist_label}>LA</label>
                         <InputMask {...register("sla")} className={add.box_small_checklist_tire} mask="9,9" placeholder="x,x" defaultValue={sla} />
-                        <input {...register("slap")} className={add.checkbox} type="checkbox" id="la" name="la" defaultChecked={slap} />
+                        <input {...register("slap")} className={add.checkbox} type="checkbox" defaultChecked={slap} />
 
                         <label className={add.box_small_checklist_label}>RA</label>
                         <InputMask {...register("sra")} className={add.box_small_checklist_tire} mask="9,9" placeholder="x,x" defaultValue={sra} />
-                        <input {...register("srap")} className={add.checkbox} type="checkbox" id="ra" name="ra" defaultChecked={srap} />
+                        <input {...register("srap")} className={add.checkbox} type="checkbox" defaultChecked={srap} />
                       </div>
                     </div>
                   </div>
@@ -253,19 +257,19 @@ function Klantendetail({ customer }) {
                       <div className={add.box_full_content_checklist}>
                         <label className={add.box_small_checklist_label}>LV</label>
                         <InputMask {...register("wlv")} className={add.box_small_checklist_tire} mask="9,9" placeholder="x,x" defaultValue={wlv} />
-                        <input {...register("wlvp")} className={add.checkbox} type="checkbox" id="lv" name="lv" defaultChecked={wlvp} />
+                        <input {...register("wlvp")} className={add.checkbox} type="checkbox" defaultChecked={wlvp} />
 
                         <label className={add.box_small_checklist_label}>RV</label>
                         <InputMask {...register("wrv")} className={add.box_small_checklist_tire} mask="9,9" placeholder="x,x" defaultValue={wrv} />
-                        <input {...register("wrvp")} className={add.checkbox} type="checkbox" id="rv" name="rv" value="rv" defaultChecked={wrvp} />
+                        <input {...register("wrvp")} className={add.checkbox} type="checkbox" defaultChecked={wrvp} />
 
                         <label className={add.box_small_checklist_label}>LA</label>
                         <InputMask {...register("wla")} className={add.box_small_checklist_tire} mask="9,9" placeholder="x,x" defaultValue={wla} />
-                        <input {...register("wlap")} className={add.checkbox} type="checkbox" id="la" name="la" defaultChecked={wlap} />
+                        <input {...register("wlap")} className={add.checkbox} type="checkbox" defaultChecked={wlap} />
 
                         <label className={add.box_small_checklist_label}>RA</label>
                         <InputMask {...register("wra")} className={add.box_small_checklist_tire} mask="9,9" placeholder="x,x" defaultValue={wra} />
-                        <input {...register("wrap")} className={add.checkbox} type="checkbox" id="ra" name="ra" defaultChecked={wrap} />
+                        <input {...register("wrap")} className={add.checkbox} type="checkbox" defaultChecked={wrap} />
                       </div>
                     </div>
                   </div>

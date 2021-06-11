@@ -44,21 +44,23 @@ function Fotodetail({ customer }) {
         <div className={customers.dashboard}>
           <form>
             <div className={customers.header}>
-              <input className={add.name} value={customer.name} />
-              <button className={add.submit} type="submit">Opslaan</button>
+              <div>
+                <input className={add.name} value={customer.name} />
+                <input className={add.name} type="text" placeholder="link afbeelding" />
+              </div>
+              <button className={add.submit} type="submit">Upload</button>
             </div>
             <div className={add.imagebox}>
-              <div className={add.imagebox_add}>
-                <FontAwesomeIcon icon={faPlus} />
-              </div>
               <div className={add.viewimage}>
                 <img src="/test.jpg" />
                 <div className={add.viewimage_date}>
                   <p>30-05-2021</p>
                 </div>
-                <div className={add.viewimage_delete}>
-                  <FontAwesomeIcon icon={faTimes} />
-                </div>
+                {admin ?
+                  <div className={add.viewimage_delete}>
+                    <FontAwesomeIcon icon={faTimes} />
+                  </div>
+                  : ''}
               </div>
             </div>
           </form>

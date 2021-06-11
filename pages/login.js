@@ -28,12 +28,9 @@ function Login() {
       window.localStorage.setItem('token', data.login.token);
       window.localStorage.setItem('userId', data.login.userId);
       window.localStorage.setItem('admin', data.login.admin);
+      router.push('/')
     }
   }, [data]);
-
-  const navigation = () => {
-    // router.push('/');
-  }
 
   return (
     <div className={styles.container}>
@@ -53,7 +50,6 @@ function Login() {
             <form className={auth.login} onSubmit={(e) => {
               e.preventDefault();
               login({ variables: { email: email, password: password } });
-              navigation();
             }}>
               <label className={auth.auth_label}>E-mail</label>
               <input className={auth.auth_name} placeholder="VUL HIER UW E-MAIL IN" onChange={e => setEmail(e.target.value)} required />

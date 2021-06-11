@@ -69,7 +69,7 @@ function Toevoegen() {
             create({ variables: { name: name, plate: plate, atelier: atelier, lang: lang, email: email, remark: remark } });
           }}>
             <div className={customers.header}>
-              <input className={add.name} placeholder="Naam" onChange={e => setName(e.target.value)} />
+              <input className={add.name} placeholder="Naam + Voornaam" onChange={e => setName(e.target.value)} />
               <button className={add.submit} type="submit" value="Submit">Opslaan</button>
             </div>
             <div className={add.box}>
@@ -168,7 +168,7 @@ function Toevoegen() {
 
               <div className={add.box_small}>
                 <p>Aantal banden</p>
-                <div className={add.box_small_checklist}>
+                <div className={add.box_small_checklist_two}>
                   <label className={add.box_small_checklist_label}>Zomer: </label>
                   <InputMask className={add.box_small_input} mask="9" placeholder="X" />
                   <label className={add.box_small_checklist_label}>Winter</label>
