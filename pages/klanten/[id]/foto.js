@@ -6,8 +6,6 @@ import customers from '../../../styles/Klanten.module.css'
 import add from '../../../styles/Add.module.css'
 
 import { GraphQLClient } from 'graphql-request'
-import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const graph = new GraphQLClient(
   "https://godefroy-api.herokuapp.com/"
@@ -20,6 +18,11 @@ function Fotodetail({ customer }) {
     const admin = localStorage.getItem('admin', admin);
     setAdmin(admin);
   }, [admin]);
+
+  const [showSummer, setSummer] = useState("false");
+  const handleToggle = () => {
+    setSummer(!showSummer);
+  };
 
   return (
     <div className={styles.container}>
@@ -46,22 +49,31 @@ function Fotodetail({ customer }) {
             <div className={customers.header}>
               <div>
                 <input className={add.name} value={customer.name} />
-                <input className={add.name} type="text" placeholder="link afbeelding" />
               </div>
               <button className={add.submit} type="submit">Upload</button>
             </div>
             <div className={add.imagebox}>
-              <div className={add.viewimage}>
-                <img src="/test.jpg" />
-                <div className={add.viewimage_date}>
-                  <p>30-05-2021</p>
-                </div>
-                {admin ?
-                  <div className={add.viewimage_delete}>
-                    <FontAwesomeIcon icon={faTimes} />
+
+              <div>
+                <div className={showSummer ? add.viewimage : add.hidden}>
+                  <img src="/test.jpg" />
+                  <div className={add.viewimage_date}>
+                    <p>Zomer LV</p>
+                    <p>30-05-2021</p>
                   </div>
-                  : ''}
+                  <div className={add.viewimage_name}>
+                    <p onClick={handleToggle}>Edit</p>
+                  </div>
+                </div>
+                <div className={showSummer ? add.hidden : add.viewimage}>
+                  <div className={add.viewimage_name}>
+                    <p onClick={handleToggle}>Terug</p>
+                  </div>
+                  <input className={add.url} defaultValue={"https://abc.com"} placeholder="link afbeelding" />
+                  <input className={add.url} defaultValue={"11-06-2021"} placeholder="datum" />
+                </div>
               </div>
+
             </div>
           </form>
         </div>
