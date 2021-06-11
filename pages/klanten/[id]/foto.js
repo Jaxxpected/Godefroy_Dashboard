@@ -6,6 +6,12 @@ import customers from '../../../styles/Klanten.module.css'
 import add from '../../../styles/Add.module.css'
 
 import { GraphQLClient } from 'graphql-request'
+import { gql, useMutation } from '@apollo/client';
+
+import { useForm } from "react-hook-form";
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
+// import { useRouter } from 'next/router'
 
 const graph = new GraphQLClient(
   "https://godefroy-api.herokuapp.com/"
@@ -13,15 +19,96 @@ const graph = new GraphQLClient(
 
 function Fotodetail({ customer }) {
 
+  const customerId = JSON.stringify(customer.id);
+
+  const UPDATE_CUSTOMER = gql`
+  mutation updateCustomer (
+    $slvName: String, 
+    $slvUrl: String, 
+    $slvUrlDate: String, 
+    $slaName: String, 
+    $slaUrl: String, 
+    $slaUrlDate: String, 
+    $srvName: String, 
+    $srvUrl: String, 
+    $srvUrlDate: String, 
+    $sraName: String, 
+    $sraUrl: String, 
+    $sraUrlDate: String, 
+    ){
+    updateCustomer(customerId: ${customerId},
+      customer: {
+      slvName: $slvName,
+      slvUrl: $slvUrl,
+      slvUrlDate: $slvUrlDate,
+      slaName: $slaName,
+      slaUrl: $slaUrl,
+      slaUrlDate: $slaUrlDate,
+      srvName: $srvName,
+      srvUrl: $srvUrl,
+      srvUrlDate: $srvUrlDate,
+      sraName: $sraName,
+      sraUrl: $sraUrl,
+      sraUrlDate: $sraUrlDate,
+      }){id}
+    }
+  `;
+
+  const schema = yup.object().shape({
+    slvUrl: yup.string().required(),
+    slvName: yup.string(),
+    slvUrlDate: yup.string(),
+    slaUrl: yup.string().required(),
+    slaName: yup.string(),
+    slaUrlDate: yup.string(),
+    srvUrl: yup.string().required(),
+    srvName: yup.string(),
+    srvUrlDate: yup.string(),
+    sraUrl: yup.string().required(),
+    sraName: yup.string(),
+    sraUrlDate: yup.string(),
+  });
+
+  const { slvName, slvUrl, slvUrlDate, slaName, slaUrl, slaUrlDate, srvName, srvUrl, srvUrlDate, sraName, sraUrl, sraUrlDate } = customer;
+
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    resolver: yupResolver(schema)
+  });
+
+  const [updateCustomer, { loading: updateCustomerLoading, error: updateCustomerError }] = useMutation(UPDATE_CUSTOMER);
+
+  const handle = (customer) => {
+    const customerFormData = {
+      ...customer,
+    }
+    updateCustomer({
+      variables: customerFormData
+    })
+    // router.push('/klanten');
+    // location.reload();
+  };
+
   const [admin, setAdmin] = useState();
   useEffect(() => {
     const admin = localStorage.getItem('admin', admin);
     setAdmin(admin);
   }, [admin]);
 
-  const [showSummer, setSummer] = useState("false");
-  const handleToggle = () => {
-    setSummer(!showSummer);
+  const [showLV, setLV] = useState("false");
+  const handleToggleLV = () => {
+    setLV(!showLV);
+  };
+  const [showLA, setLA] = useState("false");
+  const handleToggleLA = () => {
+    setLA(!showLA);
+  };
+  const [showRV, setRV] = useState("false");
+  const handleToggleRV = () => {
+    setRV(!showRV);
+  };
+  const [showRA, setRA] = useState("false");
+  const handleToggleRA = () => {
+    setRA(!showRA);
   };
 
   return (
@@ -45,7 +132,7 @@ function Fotodetail({ customer }) {
           </div>
         </div>
         <div className={customers.dashboard}>
-          <form>
+          <form onSubmit={handleSubmit(handle)}>
             <div className={customers.header}>
               <div>
                 <input className={add.name} value={customer.name} />
@@ -55,22 +142,86 @@ function Fotodetail({ customer }) {
             <div className={add.imagebox}>
 
               <div>
-                <div className={showSummer ? add.viewimage : add.hidden}>
-                  <img src="/test.jpg" />
+                <div className={showLV ? add.viewimage : add.hidden}>
+                  <img src={slvUrl} />
                   <div className={add.viewimage_date}>
                     <p>Zomer LV</p>
-                    <p>30-05-2021</p>
+                    <p>{slvUrlDate}</p>
                   </div>
                   <div className={add.viewimage_name}>
-                    <p onClick={handleToggle}>Edit</p>
+                    <p onClick={handleToggleLV}>Edit</p>
                   </div>
                 </div>
-                <div className={showSummer ? add.hidden : add.viewimage}>
+                <div className={showLV ? add.hidden : add.viewimage}>
                   <div className={add.viewimage_name}>
-                    <p onClick={handleToggle}>Terug</p>
+                    <p onClick={handleToggleLV}>Terug</p>
                   </div>
-                  <input className={add.url} defaultValue={"https://abc.com"} placeholder="link afbeelding" />
-                  <input className={add.url} defaultValue={"11-06-2021"} placeholder="datum" />
+                  <input {...register("slvName")} className={add.url} defaultValue={slvName} placeholder="Naam" />
+                  <input {...register("slvUrl")} className={add.url} defaultValue={slvUrl} placeholder="link afbeelding" />
+                  <input {...register("slvUrlDate")} className={add.url} defaultValue={slvUrlDate} placeholder="datum" />
+                </div>
+              </div>
+
+              <div>
+                <div className={showLA ? add.viewimage : add.hidden}>
+                  <img src={slaUrl} />
+                  <div className={add.viewimage_date}>
+                    <p>Zomer LA</p>
+                    <p>{slaUrlDate}</p>
+                  </div>
+                  <div className={add.viewimage_name}>
+                    <p onClick={handleToggleLA}>Edit</p>
+                  </div>
+                </div>
+                <div className={showLA ? add.hidden : add.viewimage}>
+                  <div className={add.viewimage_name}>
+                    <p onClick={handleToggleLA}>Terug</p>
+                  </div>
+                  <input {...register("slaName")} className={add.url} defaultValue={slaName} placeholder="Naam" />
+                  <input {...register("slaUrl")} className={add.url} defaultValue={slaUrl} placeholder="link afbeelding" />
+                  <input {...register("slaUrlDate")} className={add.url} defaultValue={slaUrlDate} placeholder="datum" />
+                </div>
+              </div>
+
+              <div>
+                <div className={showRV ? add.viewimage : add.hidden}>
+                  <img src={srvUrl} />
+                  <div className={add.viewimage_date}>
+                    <p>Zomer RV</p>
+                    <p>{slaUrlDate}</p>
+                  </div>
+                  <div className={add.viewimage_name}>
+                    <p onClick={handleToggleRV}>Edit</p>
+                  </div>
+                </div>
+                <div className={showRV ? add.hidden : add.viewimage}>
+                  <div className={add.viewimage_name}>
+                    <p onClick={handleToggleRV}>Terug</p>
+                  </div>
+                  <input {...register("srvName")} className={add.url} defaultValue={srvName} placeholder="Naam" />
+                  <input {...register("srvUrl")} className={add.url} defaultValue={srvUrl} placeholder="link afbeelding" />
+                  <input {...register("srvUrlDate")} className={add.url} defaultValue={srvUrlDate} placeholder="datum" />
+                </div>
+              </div>
+
+              <div>
+                <div className={showRA ? add.viewimage : add.hidden}>
+                  <img src={sraUrl} />
+                  <div className={add.viewimage_date}>
+                    <p>Zomer RA</p>
+                    <p>{slaUrlDate}</p>
+                  </div>
+                  <div className={add.viewimage_name}>
+                    <p onClick={handleToggleRA}>Edit</p>
+                  </div>
+                </div>
+                <div className={showRA ? add.hidden : add.viewimage}>
+                  <div className={add.viewimage_name}>
+                    <p onClick={handleToggleRA}>Terug</p>
+                  </div>
+                  <input {...register("sraName")} className={add.url} defaultValue={sraName} placeholder="Naam" />
+                  <input {...register("sraUrl")} className={add.url} defaultValue={sraUrl} placeholder="link afbeelding" />
+                  <input {...register("sraUrlDate")} className={add.url} defaultValue={sraUrlDate} placeholder="datum" />
                 </div>
               </div>
 
@@ -95,10 +246,18 @@ export async function getStaticProps({ params }) {
       customer(id: $id) {
         id
         name
-        plate
-        atelier
-        lang
-        email
+        slvName
+        slvUrl
+        slvUrlDate
+        slaName
+        slaUrl
+        slaUrlDate
+        srvName
+        srvUrl
+        srvUrlDate
+        sraName
+        sraUrl
+        sraUrlDate
       }
     }
     `, {
