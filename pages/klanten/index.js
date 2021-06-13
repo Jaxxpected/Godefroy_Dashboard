@@ -105,9 +105,9 @@ function Klanten({ customers }) {
             <h1>Klantenlijst</h1>
             <div>
               <a href='/toevoegen' className={customer.header_add}><FontAwesomeIcon icon={faPlus} /></a>
-              <div className={customer.header_search}>
+              {/* <div className={customer.header_search}>
                 <p>Search</p>
-              </div>
+              </div> */}
             </div>
           </div>
           <div className={customer.clients}>

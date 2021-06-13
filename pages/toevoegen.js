@@ -68,7 +68,7 @@ function Toevoegen() {
           <form onSubmit={e => {
             e.preventDefault();
             create({ variables: { name: name, plate: plate, atelier: atelier, lang: lang, email: email } });
-            router.push('/klanten');
+            // router.push('/klanten');
           }}>
             <div className={customers.header}>
               <input className={add.name} placeholder="Naam + Voornaam *" onChange={e => setName(e.target.value)} />
