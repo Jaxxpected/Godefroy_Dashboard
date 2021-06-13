@@ -211,7 +211,7 @@ function Klantendetail({ customer }) {
 
               <div className={add.box_medium}>
                 <label className={add.box_small_label}>E-mail *</label>
-                <input {...register("email")} className={add.box_small_input} type="email" placeholder="E-mail" defaultValue={email} />
+                <input {...register("email")} className={add.box_small_input} type="email" placeholder="x@gmail.com" defaultValue={email} />
                 <p>{errors.email?.message}</p>
               </div>
 

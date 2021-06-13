@@ -4,14 +4,12 @@ import Image from 'next/image'
 import styles from '../../../styles/Home.module.css'
 import customers from '../../../styles/Klanten.module.css'
 import add from '../../../styles/Add.module.css'
-
 import { GraphQLClient } from 'graphql-request'
 import { gql, useMutation } from '@apollo/client';
-
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
-// import { useRouter } from 'next/router'
+import { useRouter } from 'next/router'
 import { storage } from "../../../firebase/firebase"
 
 const graph = new GraphQLClient(
@@ -19,6 +17,8 @@ const graph = new GraphQLClient(
 );
 
 function Fotodetail({ customer }) {
+
+  const router = useRouter();
 
   const customerId = JSON.stringify(customer.id);
 
@@ -85,8 +85,7 @@ function Fotodetail({ customer }) {
     updateCustomer({
       variables: customerFormData
     })
-    // router.push('/klanten');
-    // location.reload();
+    router.push('/klanten');
   };
 
   const [admin, setAdmin] = useState();
