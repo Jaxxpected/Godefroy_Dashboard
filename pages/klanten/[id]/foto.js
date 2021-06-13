@@ -12,6 +12,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 // import { useRouter } from 'next/router'
+import { storage } from "../../../firebase/firebase"
 
 const graph = new GraphQLClient(
   "https://godefroy-api.herokuapp.com/"
@@ -55,16 +56,16 @@ function Fotodetail({ customer }) {
   `;
 
   const schema = yup.object().shape({
-    slvUrl: yup.string().required(),
+    slvUrl: yup.string(),
     slvName: yup.string(),
     slvUrlDate: yup.string(),
-    slaUrl: yup.string().required(),
+    slaUrl: yup.string(),
     slaName: yup.string(),
     slaUrlDate: yup.string(),
-    srvUrl: yup.string().required(),
+    srvUrl: yup.string(),
     srvName: yup.string(),
     srvUrlDate: yup.string(),
-    sraUrl: yup.string().required(),
+    sraUrl: yup.string(),
     sraName: yup.string(),
     sraUrlDate: yup.string(),
   });
@@ -111,6 +112,27 @@ function Fotodetail({ customer }) {
     setRA(!showRA);
   };
 
+  const [file, setFile] = useState(null);
+  const [url, setURL] = useState("");
+
+  function handleChange(e) {
+    setFile(e.target.files[0]);
+  }
+
+  function handleUpload(e) {
+    e.preventDefault();
+    const ref = storage.ref(`/${customer.name}/${file.name}`);
+    const uploadTask = ref.put(file);
+    uploadTask.on("state_changed", console.log, console.error, () => {
+      ref
+        .getDownloadURL()
+        .then((url) => {
+          setFile(null);
+          setURL(url);
+        });
+    });
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -126,20 +148,26 @@ function Fotodetail({ customer }) {
           <div className={styles.links}>
             <a href="/"><p className={styles.link_item}>Overzicht</p></a>
             <a href="/klanten"><p className={styles["link_item"] + " " + styles["active"]}>Klanten</p></a>
+            <a href="/login"><p className={styles.link_item}>Admin login</p></a>
             {admin ?
               <a href="/logout"><p className={styles.link_item}>Logout</p></a>
               : ''}
           </div>
         </div>
         <div className={customers.dashboard}>
-          <form onSubmit={handleSubmit(handle)}>
+          <form onSubmit={handleUpload}>
             <div className={customers.header}>
               <div>
-                <input className={add.name} value={customer.name} />
+                <input className={add.name} defaultValue={customer.name} />
+                <input className={add.upload} type="file" onChange={handleChange} />
+                <input className={add.urlimg} defaultValue={url} placeholder="copy link" />
               </div>
-              <button className={add.submit} type="submit">Upload</button>
+              <button className={add["submit"] + " " + add["submit_image"]} type="submit">Upload</button>
             </div>
+          </form>
+          <form onSubmit={handleSubmit(handle)}>
             <div className={add.imagebox}>
+              <button className={add.box_clickable} type="submit">Opslaan</button>
 
               <div>
                 <div className={showLV ? add.viewimage : add.hidden}>
