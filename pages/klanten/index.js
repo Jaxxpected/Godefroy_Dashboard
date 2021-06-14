@@ -11,53 +11,6 @@ import { GraphQLClient } from 'graphql-request'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-export async function getStaticProps() {
-  const graph = new GraphQLClient(
-    "https://godefroy-api.herokuapp.com/"
-  );
-
-  const { customers } = await graph.request(
-    `
-    {
-      customers {
-        id
-        name
-        plate
-        lang
-        atelier
-        email
-        remark
-        summerTires
-        winterTires
-        kit
-        tire
-        slv
-        sla
-        sra
-        srv
-        wlv
-        wla
-        wra
-        wrv
-        slvp
-        slap
-        srap
-        srvp
-        wlvp
-        wlap
-        wrap
-        wrvp
-      }
-    }
-    `
-  );
-  return {
-    props: {
-      customers,
-    }
-  }
-}
-
 function Klanten({ customers }) {
 
   const [admin, setAdmin] = useState();
@@ -143,3 +96,50 @@ function Klanten({ customers }) {
 }
 
 export default Klanten
+
+export async function getStaticProps() {
+  const graph = new GraphQLClient(
+    "https://godefroy-api.herokuapp.com/"
+  );
+
+  const { customers } = await graph.request(
+    `
+    {
+      customers {
+        id
+        name
+        plate
+        lang
+        atelier
+        email
+        remark
+        summerTires
+        winterTires
+        kit
+        tire
+        slv
+        sla
+        sra
+        srv
+        wlv
+        wla
+        wra
+        wrv
+        slvp
+        slap
+        srap
+        srvp
+        wlvp
+        wlap
+        wrap
+        wrvp
+      }
+    }
+    `
+  );
+  return {
+    props: {
+      customers,
+    }
+  }
+}

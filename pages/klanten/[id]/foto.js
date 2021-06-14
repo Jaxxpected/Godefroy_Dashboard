@@ -176,7 +176,7 @@ function Fotodetail({ customer }) {
                     <p>{slvUrlDate}</p>
                   </div>
                   <div className={add.viewimage_name}>
-                    <p onClick={handleToggleLV}>Edit</p>
+                    <p onClick={handleToggleLV}>Wijzig</p>
                   </div>
                 </div>
                 <div className={showLV ? add.hidden : add.viewimage}>
@@ -197,7 +197,7 @@ function Fotodetail({ customer }) {
                     <p>{slaUrlDate}</p>
                   </div>
                   <div className={add.viewimage_name}>
-                    <p onClick={handleToggleLA}>Edit</p>
+                    <p onClick={handleToggleLA}>Wijzig</p>
                   </div>
                 </div>
                 <div className={showLA ? add.hidden : add.viewimage}>
@@ -218,7 +218,7 @@ function Fotodetail({ customer }) {
                     <p>{slaUrlDate}</p>
                   </div>
                   <div className={add.viewimage_name}>
-                    <p onClick={handleToggleRV}>Edit</p>
+                    <p onClick={handleToggleRV}>Wijzig</p>
                   </div>
                 </div>
                 <div className={showRV ? add.hidden : add.viewimage}>
@@ -239,7 +239,7 @@ function Fotodetail({ customer }) {
                     <p>{slaUrlDate}</p>
                   </div>
                   <div className={add.viewimage_name}>
-                    <p onClick={handleToggleRA}>Edit</p>
+                    <p onClick={handleToggleRA}>Wijzig</p>
                   </div>
                 </div>
                 <div className={showRA ? add.hidden : add.viewimage}>
