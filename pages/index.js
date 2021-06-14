@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react"
+import Link from 'next/link'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
@@ -82,7 +83,7 @@ export default function Home() {
           </div>
           <div className={styles.links}>
             <a href="/"><p className={styles["link_item"] + " " + styles["active"]}>Overzicht</p></a>
-            <a href="/klanten"><p className={styles.link_item}>Klanten</p></a>
+            <p className={styles.link_item}><Link href="/klanten">Klanten</Link></p>
             <a href="/login"><p className={styles.link_item}>Admin</p></a>
             {/* This needs to be fixed */}
             {admin ?

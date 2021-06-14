@@ -46,7 +46,7 @@ function Klanten({ customers }) {
           </div>
           <div className={styles.links}>
             <p className={styles.link_item}><Link href="/">Overzicht</Link></p>
-            <a href="/klanten"><p className={styles["link_item"] + " " + styles["active"]}>Klanten</p></a>
+            <p className={styles["link_item"] + " " + styles["active"]}><Link href="/klanten">Klanten</Link></p>
             <a href="/login"><p className={styles.link_item}>Admin login</p></a>
             {admin ?
               <a href="/logout"><p className={styles.link_item}>Logout</p></a>
