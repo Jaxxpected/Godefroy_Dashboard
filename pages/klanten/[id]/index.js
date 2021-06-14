@@ -340,7 +340,7 @@ function Klantendetail({ customer }) {
 
 export default Klantendetail
 
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
   const { customer } = await graph.request(
     `
     query Customer($id: ID!) {

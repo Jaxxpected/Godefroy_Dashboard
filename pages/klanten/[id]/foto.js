@@ -266,7 +266,7 @@ function Fotodetail({ customer }) {
 
 export default Fotodetail
 
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
   const { customer } = await graph.request(
     `
     query Customer($id: ID!) {

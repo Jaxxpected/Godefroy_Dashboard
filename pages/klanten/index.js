@@ -97,7 +97,7 @@ function Klanten({ customers }) {
 
 export default Klanten
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const graph = new GraphQLClient(
     "https://godefroy-api.herokuapp.com/"
   );
